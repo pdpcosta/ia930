@@ -5,7 +5,7 @@
 O objetivo do Projeto Final é que você seja exposto à necessidade de pensar e completar pelo menos um ciclo de desenvolvimento de uma aplicação de Computação Afetiva, ou seja, uma aplicação que envolva a detecção ou a síntese de emoções com objetivos específicos.
 
 Nesta primeira entrega, siga as seguintes instruções atentamente:
- * Garanta que cada membro da equipe tenha uma conta github (serão monitoradas as contribuições de cada membro).
+ * Garanta que cada membro da equipe tenha uma conta github (poderão ser monitoradas as contribuições de cada membro).
  * Faça fork deste repositório.
  * No seu fork, **dentro da pasta** `2022.2`, crie uma nova pasta com o nome do seu projeto.
  * Faça o commit dos arquivos associados a esta entrega, conforme descrito a seguir.
