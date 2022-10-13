@@ -8,26 +8,22 @@ O presente projeto foi originado no contexto das atividades da disciplina de pó
 
  |Nome  | RA | Especialização|
  |--|--|--|
- | Guilherme Camargo  | 201664  | Eng. de Computação/Bioinformata|
+ | Guilherme Camargo  | 201664  | Eng. de Computação|
 
 
 ## Descrição Resumida do Projeto
-> Descrição do tema do projeto, incluindo contexto gerador, motivação.
-> Descrição do objetivo principal do projeto.
-> 
-> Incluir nessa seção link para vídeo de apresentação da proposta do projeto (máximo 10 minutos).
 
-O objetivo deste projeto é desenvolver um algoritmo capaz de sugerir filme(s) de acordo com a emoção detectada através de imagem(ns).
+Nos últimos anos, a internet vem sendo utilizada por grande parte das pessoas para entretenimento, e assistir filme(s) neste contexto torna-se algo comum. Contudo, escolher um título do imenso catálogo disponível nem sempre é tarefa fácil. A fim de mitigar tal problema, tem-se como objetivo deste projeto o desenvolvimento de um software capaz de sugerir filme(s) de acordo com a emoção detectada, através de imagem(ns) facial(is), do usuário, ou seja, implementar um sistema afetivo de recomendação de filmes.
+
+Portanto, o projeto será constituído de dois módulos principais:
+
+ 1. **Construção do modelo de classificação**: Construir um modelo de Inteligência Artificial capaz de detectar emoções em imagens de faces humanas.
+ 2. **Sugerir filme**: Mapear o resultado obtido através do modelo com um ou mais títulos do catálogo de filmes.
+
+Vídeo: https://youtu.be/KHQICMc6GZo
 
 
 ## Metodologia Proposta
-> Para a primeira entrega, a metodologia proposta deve procurar responder:
-~~> * Qual(is) base(s) de dado(s) o projeto pretende utilizar, justificando a(s) escolha(s) realizadas.~~
-~~> * Quais abordagens o grupo já enxerga como interessantes de serem estudadas.~~
-> * Artigos de referência já identificados e que serão estudados ou usados como parte do planejamento do projeto
-~~> * Ferramentas a serem utilizadas (com base na visão atual do grupo sobre o projeto).~~
-~~> * Resultados esperados~~
-> * Proposta de avaliação
 
 A princípio serão utilizados dois conjuntos de dados:
 
@@ -36,15 +32,23 @@ A princípio serão utilizados dois conjuntos de dados:
 
 Duas possíveis abordagens: Deep Learning (DL) ou Supervised Learning (SL).
 
+Artigos de referência:
+[1] Q. Chen and J. Qin, "Research and implementation of movie recommendation system based on deep learning," 2021 IEEE International Conference on Computer Science, Electronic Information Engineering and Intelligent Control Technology (CEI), 2021, pp. 225-228, doi: 10.1109/CEI52496.2021.9574461.Abstract: In recent years, with the rapid development of information technology and the Internet, watching movies through the Internet has become a habit for many people. However, the overload of movie information has become more and more serious because people cannot get their favorite movie content quickly from the huge amount of movie resources. As one of the important means to alleviate the information overload problem, the recommendation system can help users find their favorite movie content quickly and bring them a good experience, so it is widely used in famous movie and video websites at home and abroad, and has brought great commercial value. In this paper, we introduce the recommendation system and recommendation algorithm, improve the ConvMF model based on deep learning, verify and analyze the experimental results, and finally complete the design of movie recommendation subsystem.URL: https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9574461&isnumber=9574447
 
+[2] K. Amulya, S. B. Swathi, P. Kamakshi and Y. Bhavani, "Sentiment Analysis on IMDB Movie Reviews using Machine Learning and Deep Learning Algorithms," 2022 4th International Conference on Smart Systems and Inventive Technology (ICSSIT), 2022, pp. 814-819, doi: 10.1109/ICSSIT53264.2022.9716550.Abstract: Sentiment analysis is the study, to classify the text based on customer reviews which can provide valuable information to improve business. Previously the analysis was carried out based on the information provided by the customers using natural language processing and machine learning. In this paper, sentiment analysis on IMDB movie reviews dataset is implemented using Machine Learning (ML) and Deep Learning (DL) approaches to measure the accuracy of the model. ML algorithms are the traditional algorithms that work in a single layer while deep learning algorithms work on multilayers and gives better output. This paper helps the researchers to identify the best algorithm for sentiment analysis. The comparison of the machine learning and deep learning approaches shows that DL algorithms provide accurate and efficient results.URL: https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9716550&isnumber=9716227
 
 Caso a abordagem por DL seja escolhida, serão utilizadas as ferramentas Pytorch e/ou TensorFlow. Caso contrário, classificadores de padrão como SVM, RF, OPF, etc.
 
 Espera-se que o programa seja capaz de identificar a emoção em uma imagem ou foto com alta acurácia (~90%) para que o filme sugerido faça sentido.
 
-
 ## Cronograma
-> Proposta de cronograma. Procure estimar quantas semanas serão gastas para cada etapa do projeto.
+| Item | S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8
+|--|--|--|--|--|--|--|--|--|--|--|--|
+| Proposta | X | X |  |  |  |  |  |  
+| Levantamento dos dados | X | X |  |  |  |  |  | 
+| Desenvolvimento do algoritmo |  | X | X | X | X |  |  | 
+| Testes |  |  | X | X | X | X |  |  
+| Entrega |  |  |  |  |  |  | X |  X
 
 ## Referências Bibliográficas
  https://docs.python.org/3/
