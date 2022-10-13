@@ -42,18 +42,27 @@ Caso a abordagem por DL seja escolhida, serão utilizadas as ferramentas Pytorch
 Espera-se que o programa seja capaz de identificar a emoção em uma imagem ou foto com alta acurácia (~90%) para que o filme sugerido faça sentido.
 
 ## Cronograma
-| Item | S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8
-|--|--|--|--|--|--|--|--|--|--|--|--|
-| Proposta | X | X |  |  |  |  |  |  
-| Levantamento dos dados | X | X |  |  |  |  |  | 
-| Desenvolvimento do algoritmo |  | X | X | X | X |  |  | 
-| Testes |  |  | X | X | X | X |  |  
-| Entrega |  |  |  |  |  |  | X |  X
+
+A seguir o possível cronograma:
+
+| Item | S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8 |
+|--|--|--|--|--|--|--|--|--|
+| Proposta | X | X |  |  |  |  |  |  |
+| Levantamento dos dados | X | X |  |  |  |  |  |  |
+| Desenvolvimento do algoritmo |  | X | X | X | X |  |  |  |
+| Testes |  |  | X | X | X | X |  |  |
+| Entrega |  |  |  |  |  |  | X | X |
+
 
 ## Referências Bibliográficas
  https://docs.python.org/3/
+ 
  https://pytorch.org/tutorials/
+ 
  https://www.tensorflow.org/tutorials?hl=pt-br
+ 
  https://builtin.com/data-science/supervised-learning-python
+ 
  https://paperswithcode.com/dataset/fer2013
+ 
  https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata
