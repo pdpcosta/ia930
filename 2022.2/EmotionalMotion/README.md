@@ -29,7 +29,7 @@ O objetivo principal do projeto consiste na implementação de um sistema de doi
 1. Detector de estado emocional a partir de dados de acelerômetro e giroscópio (eventualmente outros dados sensoriais poderão ser acrescentados);  
 2.  Módulo de sugestão de música para regulação de estados emocionais alterados.
 
-Link Vídeo: 
+Link Vídeo: https://www.youtube.com/watch?v=Ok2jQL6u2_Q
 
 ## Metodologia Proposta
 
