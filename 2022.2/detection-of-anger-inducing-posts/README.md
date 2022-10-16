@@ -32,11 +32,11 @@ O objetivo deste trabalho é tentar detectar posts que possam conter gatilhos em
 
 - Idealmente iremos desenvolver uma extensão para o Mozilla Firefox que utilize o modelo para fazer as classificações enquanto o usuário navega pelas redes sociais.
 
-- Inicialmente iremos usar Python, PyTorch e modelos de linguagem disponíveis na HuggingFace.
+- Inicialmente iremos usar Python, PyTorch e modelos de linguagem disponíveis na HuggingFace. Vamos avaliar implementações em TensorFlow também, principalmente porque pretendemos usar o modelo em uma extensão de browser.
 
 ## Cronograma
 
-|Semana|17/10|24/10|31/10|07/11|14/11|21/11|28/11|05/02|
+|Semana|17/10|24/10|31/10|07/11|14/11|21/11|28/11|05/12|
 |--|--|--|--|--|--|--|--|--|
 |Revisão bibliográfica|X|X|
 |Desenvolvimento/treinamento do modelo|||X|X|X
