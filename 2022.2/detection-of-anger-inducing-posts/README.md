@@ -8,7 +8,7 @@ oferecida no segundo semestre de 2022, na Unicamp, sob supervisão da Profa. Dra
 
 |Nome  | RA | Especialização|
 |--|--|--|
-| Douglas Esteves  | 123456  | Eng. de Computação  | 
+| Douglas Esteves  | 189697  | Eng. de Computação  | 
 | Pedro Fracarolli | 191535  | Analista de Sistemas|
 
 
