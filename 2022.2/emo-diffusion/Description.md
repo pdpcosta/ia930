@@ -19,7 +19,7 @@ Os modelos GAN e VAE são conhecidos pelo treinamento potencialmente instável e
 Por outro lado, os modelos baseados em fluxo (flow) precisam usar arquiteturas especializadas para construir a transformada reversível.
 Os modelos de difusão que serão utilizados neste projeto propõem superar as limitações dos modelos generativos mencionados. Eles definem uma cadeia de Markov de etapas de difusão, nas quais é lentamente adicionado ruído aleatoriario as imagens de entrada. Depois, o modelo aprende a reverter o processo de difusão para construir novas imagens a partir do ruído. Neste projeto, vamos explorar os modelos de difusão com o objetivo de gerar imagens faciais que expressam uma emoção, já que esse enfoque não tem sido implementado. Para isso, serão utilizadas bases de dados que contêm imagens faciais que foram etiquetadas com uma emoção específica. Em conclusão, o nosso projeto estará focado na geração condicional de rostos humanos emocionais usando modelos de difusão. 
 
-Vídeo da proposta do projeto: 
+Vídeo da proposta do projeto: https://drive.google.com/file/d/1yzE06F3gvg9IBQWD5QTkkFm22fKWH1Q7/view?usp=sharing 
 
 ## Metodologia Proposta
 
