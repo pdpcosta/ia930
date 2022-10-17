@@ -35,24 +35,43 @@ Esta base de dados tem sido amplamente utilizada para reconhecimento de emoçõe
 
 Enlace do repositório: https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data
 
+<p align="center">
+	<img src="https://github.com/kgrosero/ia930/blob/main/2022.2/emo-diffusion/figures/fer2013.png" align="middle" width="700">
+	  <figcaption>
+  	Figura 1: Amostras da base de dados FER2013.
+  	</figcaption>
+</p>
+
 #### Extended Cohn-Kanade Dataset (CK+)
 
 Esta base de dados contem 593 sequências de images de 123 pessoas na faixa etaria entre 18 e 50 anos. Cada sequência de imagens tem entre 10 e 60 quadros da pessoa em transição da emoção neutra para a emoção alvo. As 7 emoções consideras são: raiva, nojo, medo, felicidade, tristeza, surpresa, e desprezo. Cada quadro tem 640x480 pixeis em escala de cinza ou com cor. 
 
 Enlace do repositório: https://www.kaggle.com/datasets/shawon10/ckplus
 
-### Modelos generativos
+<p align="center">
+	<img src="https://github.com/kgrosero/ia930/blob/main/2022.2/emo-diffusion/figures/ck%2B.png" align="middle" width="700">
+	  <figcaption>
+  	Figura 2: Amostras da base de dados CK+.
+  	</figcaption>
+</p>
+
+### Modelos de difusão
 
 Os modelos generativos são uma classe de métodos de aprendizado de máquina que aprendem uma representação dos dados em que são treinados e modelam os próprios dados. Eles geralmente são baseados em redes neurais profundas.  Os modelos generativos permitem sintetizar novos dados que são diferentes dos dados reais, mas ainda parecem tão realistas. É assim que se treinarmos um modelo generativo em imagens de carros, a modelo seria capaz de gerar imagens de novos carros com aparências diferentes.
 
 Recentemente, os modelos de difusão surgiram como uma poderosa classe de métodos de aprendizagem generativa. Esses modelos, também conhecidos como modelos de difusão de denoising ou modelos generativos baseados em pontuação, demonstram uma qualidade de amostra surpreendentemente alta, muitas vezes superando as redes adversárias generativas. Os modelos de difusão já foram aplicados a uma variedade de tarefas de geração, como imagens e fala.
 
-Os modelos de difusão consistem em dois processos: difusão direta e reversa parametrizada. Como mostrado na Figura, o processo de difusão direta mapeia dados para ruído perturbando gradualmente os dados de entrada. Isso é formalmente alcançado por um processo estocástico simples que começa a partir de uma amostra de dados e gera iterativamente amostras mais ruidosas usando um kernel de difusão gaussiana simples. Ou seja, em cada etapa desse processo, o ruído gaussiano é adicionado aos dados de forma incremental. O segundo processo é um processo reverso parametrizado que desfaz a difusão direta e realiza a remoção de ruído iterativa. Este processo representa a síntese de dados e é treinado para gerar dados convertendo ruído aleatório em dados realistas [3]. 
+Os modelos de difusão consistem em dois processos: difusão direta e reversa parametrizada. Como mostrado na Figura 3, o processo de difusão direta mapeia dados para ruído perturbando gradualmente os dados de entrada. Isso é formalmente alcançado por um processo estocástico simples que começa a partir de uma amostra de dados e gera iterativamente amostras mais ruidosas usando um kernel de difusão gaussiana simples. Ou seja, em cada etapa desse processo, o ruído gaussiano é adicionado aos dados de forma incremental. O segundo processo é um processo reverso parametrizado que desfaz a difusão direta e realiza a remoção de ruído iterativa. Este processo representa a síntese de dados e é treinado para gerar dados convertendo ruído aleatório em dados realistas [3]. Tanto o processo direto quanto o reverso geralmente usam milhares de etapas para injeção gradual de ruído e durante a geração para eliminação de ruído [4].
 
+<p align="center">
+	<img src="https://github.com/kgrosero/ia930/blob/main/2022.2/emo-diffusion/figures/diff2.png" align="middle" width="700">
+	  <figcaption>
+  	Figura 3: Metodologia do algoritmo de difusão.
+  	</figcaption>
+</p>
 
-
-Tanto o processo direto quanto o reverso geralmente usam milhares de etapas para injeção gradual de ruído e durante a geração para eliminação de ruído.
-O modelo de inteligência artificial utilizado serão os modelos de difusão, que são capazes de gerar imagens novas baseadas 
+Neste projeto, o modelo de geração utilizado será o modelo de difusão, com o objetivo de gerar condicionalmente rostos de pessoas que evocam uma determinada emoção.
+Além disso, este projeto aborda a perspectiva de geração condicionada, que neste caso sera baseada nos rótulos da classe que representam um grupo de emoções. 
 
 ### Ferramentas 
 
@@ -60,9 +79,21 @@ Para este projeto será utilizado Google Colab Pro. O código base dos modelos d
 
 ### Resultados esperados 
 
+reinar modelos generativos em imagens com informações de condicionamento, como o conjunto de dados ImageNet, é comum gerar amostras condicionadas em rótulos de classe ou em um texto descritivo.
+
+<p align="center">
+	<img src="https://github.com/kgrosero/ia930/blob/main/2022.2/emo-diffusion/figures/results.png" align="middle" width="700">
+	  <figcaption>
+  	Figura 4: Exemplo dos resultados esperados.
+  	</figcaption>
+</p>
+
 
 ### Proposta de avaliação
 
+Segundo [4], os modelos de difusão podem ser avaliados usando a função log de verossimilhança, em que o procedimento de treinamento visa melhorar o amostrador dinâmico de Langevin usando inferência variacional. Portanto, a função log de verossimilhança será a métrica objetiva a ser utilizada no projeto. 
+
+Também propomos usar uma avaliação subjetiva da qual os colegas da disciplina poderiam ser parte, com o objetivo de saber se a imagem gerada seria considerada por pessoas, como pertencendo à categoria alvo.
 
 ## Cronograma
 
@@ -87,8 +118,13 @@ A continuação detalhamos as atividades a serem desenvolvidas nas próximas sem
 Hamner, W. Cukierski, Y. Tang, D. Thaler, D.-H. Lee et al.,
 “Challenges in representation learning: A report on three machine
 learning contests,” in International Conference on neural Information Processing. Springer, 2013, pp. 117-124.
+
 [2] P. Lucey, J. F. Cohn, T. Kanade, J. Saragih, Z. Ambadar and I. Matthews, "The Extended Cohn-Kanade Dataset (CK+): A complete dataset for action unit and emotion-specified expression," 2010 IEEE Computer Society Conference on Computer Vision and Pattern Recognition - Workshops, 2010, pp. 94-101, doi: 10.1109/CVPRW.2010.5543262.
+
 [3] Weng, Lilian. (Jul 2021). What are diffusion models? Lil’Log. https://lilianweng.github.io/posts/2021-07-11-diffusion-models/.
-[2] Jonathan Ho et al. “Denoising diffusion probabilistic models.” arxiv Preprint arxiv:2006.11239 (2020).
-[3] Alex Nichol & Prafulla Dhariwal. “Improved denoising diffusion probabilistic models” arxiv Preprint arxiv:2102.09672 (2021).
-[4] Aditya Ramesh et al. “Hierarchical Text-Conditional Image Generation with CLIP Latents." arxiv Preprint arxiv:2204.06125 (2022).
+
+[4] Jonathan Ho et al. “Denoising diffusion probabilistic models.” arxiv Preprint arxiv:2006.11239 (2020).
+
+[4] Alex Nichol & Prafulla Dhariwal. “Improved denoising diffusion probabilistic models” arxiv Preprint arxiv:2102.09672 (2021).
+
+[6] Aditya Ramesh et al. “Hierarchical Text-Conditional Image Generation with CLIP Latents." arxiv Preprint arxiv:2204.06125 (2022).
