@@ -18,7 +18,7 @@ Veículos de mídia e redes sociais têm interesse em aumentar o engajamento de 
 
 O objetivo deste trabalho é tentar detectar posts que possam conter gatilhos emocionais negativos, de forma a alertar os leitores sobre a possível real intenção da notícia, com foco em métodos de processamento de linguagem natural, num primeiro momento. 
 
-> [IA930- Detecção de posts indutores de raiva- Entrega 01](https://www.youtube.com/watch?v=sCC43oI0ADY)
+> [IA930- Detecção de posts indutores de raiva](https://www.youtube.com/watch?v=sCC43oI0ADY)
 
 
 ## Metodologia Proposta
@@ -31,7 +31,7 @@ O objetivo deste trabalho é tentar detectar posts que possam conter gatilhos em
 
 - De forma alternativa, tentaremos gerar comentários para posts e detectar as emoções para tentar ter uma assertividade maior, mas isso ainda está para ser definido.
 
-- Idealmente iremos desenvolver uma extensão para o Mozilla Firefox que utilize o modelo para fazer as classificações enquanto o usuário navega pelas redes sociais.
+- Idealmente iremos desenvolver uma extensão para o navegador Mozilla Firefox que utilize o modelo para fazer as classificações enquanto o usuário navega pelas redes sociais.
 
 - Inicialmente iremos usar Python, PyTorch e modelos de linguagem disponíveis na HuggingFace. Vamos avaliar implementações em TensorFlow também, principalmente porque pretendemos usar o modelo em uma extensão de browser.
 
