@@ -13,32 +13,82 @@ oferecida no segundo semestre de 2022, na Unicamp, sob supervisão da Profa. Dra
 > | Renan Yamaguti  | 262731  | Eng. em Computação|
 
 ## Descrição Resumida do Projeto
-> Descrição do tema do projeto, incluindo contexto gerador, motivação.
-> Descrição do objetivo principal do projeto.
-> 
+
 Modelos generativos como GAN, VAE, baseados em fluxo mostraram grande sucesso na geração de amostras de alta qualidade, mas possuem algumas limitações próprias. 
 Os modelos GAN e VAE são conhecidos por treinamento potencialmente instável e menor diversidade na geração devido à sua natureza de treinamento contraditório.
 Por outro lado, os modelos baseados em fluxo precisam usar arquiteturas especializadas para construir a transformada reversível.
-Os modelos de difusão que serão utilizados neste projeto propõem superar as limitações dos modelos generativos mencionados. Eles definem uma cadeia de Markov de etapas de difusão, nas quais é lentamente adicionado 
-ruído aleatoriario as imagens de entrada. Depois, o modelo aprende a reverter o processo de difusão para construir novas imagens a partir do ruído. 
-Neste projeto, vamos explorar os modelos de difusão com o objetivo de gerar imagens faciais que expressam uma emoção. Para isso, serão utilizadas bases de dados que contêm 
-imagens faciais que foram etiquetadas com uma emoção específica. O nosso projeto estará focado na geração condicional de rostos humanos emocionais. 
+Os modelos de difusão que serão utilizados neste projeto propõem superar as limitações dos modelos generativos mencionados. Eles definem uma cadeia de Markov de etapas de difusão, nas quais é lentamente adicionado ruído aleatoriario as imagens de entrada. Depois, o modelo aprende a reverter o processo de difusão para construir novas imagens a partir do ruído. Neste projeto, vamos explorar os modelos de difusão com o objetivo de gerar imagens faciais que expressam uma emoção, já que esse enfoque não tem sido implementado. Para isso, serão utilizadas bases de dados que contêm imagens faciais que foram etiquetadas com uma emoção específica. Em conclusão, o nosso projeto estará focado na geração condicional de rostos humanos emocionais usando modelos de difusão. 
 
-> Incluir nessa seção link para vídeo de apresentação da proposta do projeto (máximo 10 minutos).
+Vídeo da proposta do projeto: 
 
 ## Metodologia Proposta
-> Para a primeira entrega, a metodologia proposta deve procurar responder:
-> * Qual(is) base(s) de dado(s) o projeto pretende utilizar, justificando a(s) escolha(s) realizadas.
-> * Quais abordagens o grupo já enxerga como interessantes de serem estudadas.
-> * Artigos de referência já identificados e que serão estudados ou usados como parte do planejamento do projeto
-> * Ferramentas a serem utilizadas (com base na visão atual do grupo sobre o projeto).
-> * Resultados esperados
-> * Proposta de avaliação
+
+A metodologia do projeto será explicada nas seguintes seções.
+
+### Bases de dados
+
+Visando gerar rostos de pessoas que expressam alguma emoção, precisamos de bases de dados etiquetadas usando modelos de emoções. Como primeira perspectiva do projeto, temos duas opções de bases de dados: FER2013 Dataset [1] e Extended Cohn-Kanade Dataset (CK+) [2]. A continuação apresentamos uma breve descrição de cada base de dados.
+
+#### FER2013 Dataset 
+
+Esta base de dados tem sido amplamente utilizada para reconhecimento de emoções faciais, e está disponível publicamente em Kaggle. FER2013 contem 35887 imagens normalizadas a 48x48 pixeis em escala de cinza, que expressam 7 emoções: raiva, nojo, medo, felicidade, tristeza, surpresa, neutro. 
+
+Enlace do repositório: https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data
+
+#### Extended Cohn-Kanade Dataset (CK+)
+
+Esta base de dados contem 593 sequências de images de 123 pessoas na faixa etaria entre 18 e 50 anos. Cada sequência de imagens tem entre 10 e 60 quadros da pessoa em transição da emoção neutra para a emoção alvo. As 7 emoções consideras são: raiva, nojo, medo, felicidade, tristeza, surpresa, e desprezo. Cada quadro tem 640x480 pixeis em escala de cinza ou com cor. 
+
+Enlace do repositório: https://www.kaggle.com/datasets/shawon10/ckplus
+
+### Modelos generativos
+
+Os modelos generativos são uma classe de métodos de aprendizado de máquina que aprendem uma representação dos dados em que são treinados e modelam os próprios dados. Eles geralmente são baseados em redes neurais profundas.  Os modelos generativos permitem sintetizar novos dados que são diferentes dos dados reais, mas ainda parecem tão realistas. É assim que se treinarmos um modelo generativo em imagens de carros, a modelo seria capaz de gerar imagens de novos carros com aparências diferentes.
+
+Recentemente, os modelos de difusão surgiram como uma poderosa classe de métodos de aprendizagem generativa. Esses modelos, também conhecidos como modelos de difusão de denoising ou modelos generativos baseados em pontuação, demonstram uma qualidade de amostra surpreendentemente alta, muitas vezes superando as redes adversárias generativas. Os modelos de difusão já foram aplicados a uma variedade de tarefas de geração, como imagens e fala.
+
+Os modelos de difusão consistem em dois processos: difusão direta e reversa parametrizada. Como mostrado na Figura, o processo de difusão direta mapeia dados para ruído perturbando gradualmente os dados de entrada. Isso é formalmente alcançado por um processo estocástico simples que começa a partir de uma amostra de dados e gera iterativamente amostras mais ruidosas usando um kernel de difusão gaussiana simples. Ou seja, em cada etapa desse processo, o ruído gaussiano é adicionado aos dados de forma incremental. O segundo processo é um processo reverso parametrizado que desfaz a difusão direta e realiza a remoção de ruído iterativa. Este processo representa a síntese de dados e é treinado para gerar dados convertendo ruído aleatório em dados realistas [3]. 
+
+
+
+Tanto o processo direto quanto o reverso geralmente usam milhares de etapas para injeção gradual de ruído e durante a geração para eliminação de ruído.
+O modelo de inteligência artificial utilizado serão os modelos de difusão, que são capazes de gerar imagens novas baseadas 
+
+### Ferramentas 
+
+Para este projeto será utilizado Google Colab Pro. O código base dos modelos de difusão foi desenvolvido em PyTorch e está disponível neste repositório https://github.com/NVlabs/denoising-diffusion-gan.
+
+### Resultados esperados 
+
+
+### Proposta de avaliação
+
 
 ## Cronograma
-> Proposta de cronograma. Procure estimar quantas semanas serão gastas para cada etapa do projeto.
+
+A continuação detalhamos as atividades a serem desenvolvidas nas próximas semanas até o dia da apresentação final do projeto.
+
+<b> 24/10 </b>: Processamento de base de dados 1
+
+<b> 31/10 </b>: Processamento de base de dados 2
+
+<b> 7/11 </b>: Estudo de modelos de difusão
+
+<b> 14/11, 21/11 </b>: Adaptação do código dos modelos de difusão com as bases de dados propostas
+
+<b> 28/11 </b>: Avaliação dos resultados e escrita do relatório do projeto.
+
+<b> 5/12 </b>: Apresentação do projeto
+
 
 ## Referências Bibliográficas
 
-[1] Weng, Lilian. (Jul 2021). What are diffusion models? Lil’Log. https://lilianweng.github.io/posts/2021-07-11-diffusion-models/.
-[2] 
+[1] I. J. Goodfellow, D. Erhan, P. L. Carrier, A. Courville, M. Mirza, B.
+Hamner, W. Cukierski, Y. Tang, D. Thaler, D.-H. Lee et al.,
+“Challenges in representation learning: A report on three machine
+learning contests,” in International Conference on neural Information Processing. Springer, 2013, pp. 117-124.
+[2] P. Lucey, J. F. Cohn, T. Kanade, J. Saragih, Z. Ambadar and I. Matthews, "The Extended Cohn-Kanade Dataset (CK+): A complete dataset for action unit and emotion-specified expression," 2010 IEEE Computer Society Conference on Computer Vision and Pattern Recognition - Workshops, 2010, pp. 94-101, doi: 10.1109/CVPRW.2010.5543262.
+[3] Weng, Lilian. (Jul 2021). What are diffusion models? Lil’Log. https://lilianweng.github.io/posts/2021-07-11-diffusion-models/.
+[2] Jonathan Ho et al. “Denoising diffusion probabilistic models.” arxiv Preprint arxiv:2006.11239 (2020).
+[3] Alex Nichol & Prafulla Dhariwal. “Improved denoising diffusion probabilistic models” arxiv Preprint arxiv:2102.09672 (2021).
+[4] Aditya Ramesh et al. “Hierarchical Text-Conditional Image Generation with CLIP Latents." arxiv Preprint arxiv:2204.06125 (2022).
