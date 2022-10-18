@@ -18,7 +18,7 @@ Este projeto se dedica a geração de imagens a partir de áudio, usando como fo
 
 Objetivo: gerar imagem a partir de música
 
-> Incluir nessa seção link para vídeo de apresentação da proposta do projeto (máximo 10 minutos).
+> Link de vídeo explicativo da proposta: https://drive.google.com/file/d/1nc2I1tT4e_ss7M-1E-GdSeo_S0MkAl8R/view?usp=sharing
 
 ## Metodologia Proposta
  Para a primeira entrega, a metodologia proposta deve procurar responder:
