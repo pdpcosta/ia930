@@ -18,7 +18,7 @@ Veículos de mídia e redes sociais têm interesse em aumentar o engajamento de 
 
 O objetivo deste trabalho é tentar detectar posts que possam conter gatilhos emocionais negativos, de forma a alertar os leitores sobre a possível real intenção da notícia, com foco em métodos de processamento de linguagem natural, num primeiro momento. 
 
-> [IA930- Detecção de posts indutores de raiva](https://www.youtube.com/watch?v=sCC43oI0ADY)
+> [IA930- Detecção de posts indutores de raiva](https://youtu.be/FMxbsorAHPg)
 
 
 ## Metodologia Proposta
