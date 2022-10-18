@@ -23,7 +23,8 @@ Objetivo: gerar imagem a partir de música
 ## Metodologia Proposta
  Para a primeira entrega, a metodologia proposta deve procurar responder:
  * Qual(is) base(s) de dado(s) o projeto pretende utilizar, justificando a(s) escolha(s) realizadas.
-    * https://cvml.unige.ch/databases/DEAM/
+    * Base com 1802 músicas com as devidas rotulações emocionais instantâneas e totais de uma música, que seria bom para criação de classificador contínuo em música (https://cvml.unige.ch/databases/DEAM/)
+    * Base com 82 mil músicas com rotulações emocionais de músicas e suas letras, que seria bom para termos aspectos semânticos para a criação das imagens  (https://data.mendeley.com/datasets/3t9vbwxgr5/2)
  * Quais abordagens o grupo já enxerga como interessantes de serem estudadas.
     * Pensamos em pegar rótulos de emoções, combinar com aspectos semânticos e dados dimensionais afetivos da música para gerar uma string que será a entrada para a geração de uma imagem no software Dall-e 2. 
  * Artigos de referência já identificados e que serão estudados ou usados como parte do planejamento do projeto
