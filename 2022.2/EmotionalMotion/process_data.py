@@ -72,9 +72,9 @@ def extract_features(window):
         d2s_dt2 = ds_dt[1:] - ds_dt[:-1]
         features.append(np.nonzero(d2s_dt2)[0].size / sensor_data.shape[0]) # Mudança de inclinação
 
-        norm = sensor_data / max
-        p = norm / np.sum(norm)
-        features.append(stats.entropy(p)) # Entropia
+#        norm = sensor_data / max
+#        p = norm / np.sum(norm)
+#        features.append(stats.entropy(p)) # Entropia
 
 
     # Features por sensor (dependem da combinação dos eixos x, y e z)
@@ -99,10 +99,10 @@ def extract_features(window):
 
     return features
 
-def preprocess_data(root_dir):
+def load_and_extract(root_dir):
     processed_data = []
 
-    pbar = tqdm(listdir(root_dir), total=len(listdir(root_dir)))
+    pbar = tqdm(sorted(listdir(root_dir)), total=len(listdir(root_dir)))
     for file_name in pbar:
         # Carrega os dados do arquivo
         data = np.loadtxt(root_dir + file_name, delimiter=',')
@@ -133,11 +133,10 @@ def preprocess_data(root_dir):
         for label in range(len(segmented_data)):
             for window in segmented_data[label]:
                 vectorized_data.append(extract_features(window[:, :3]) + [label])
-                vectorized_data.append(extract_features(window[:, -3:]) + [label])
 
-        processed_data.append(vectorized_data)
+        processed_data.extend(vectorized_data)
 
-    return processed_data
+    return np.asarray(processed_data)
 
 if __name__ == "__main__":
     preprocess_data(DATA_DIR)
