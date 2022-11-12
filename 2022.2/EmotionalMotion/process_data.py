@@ -132,7 +132,7 @@ def load_and_extract(root_dir):
         vectorized_data = []
         for label in range(len(segmented_data)):
             for window in segmented_data[label]:
-                vectorized_data.append(extract_features(window[:, :3]) + [label])
+                vectorized_data.append(extract_features(window[:, :3]) + extract_features(window[:, 3:]) + [label])
 
         processed_data.extend(vectorized_data)
 
