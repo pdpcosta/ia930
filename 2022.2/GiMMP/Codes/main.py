@@ -8,6 +8,7 @@ from tensorflow.keras import layers, preprocessing
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from keras.utils import generic_utils
 
 
 image_size = (48, 48)
@@ -15,7 +16,7 @@ batch_size = 32
 num_classes = 7
 
 callbacks = [
-    keras.callbacks.ModelCheckpoint("save_at_{epoch}.h5"),
+    keras.callbacks.ModelCheckpoint("save_at_{epoch}.h5")
 ]
 
 data_augmentation = keras.Sequential(
@@ -57,8 +58,41 @@ def load_images():
     )
     return train_ds, val_ds
 
+
+
+
+
+
+# def xxxxxxx(input_shape, num_classes, augment_data):
+
+#     model = Sequential()
+#     model.add(Conv2D(6, (5, 5), input_shape=input_shape, padding='same', activation = 'relu'))
+#     model.add(MaxPooling2D(pool_size=(2, 2)))
+
+#     model.add(Conv2D(16, (5, 5), padding='same', activation = 'relu'))
+#     model.add(Activation('relu'))
+#     model.add(MaxPooling2D(pool_size=(2, 2)))
+
+#     model.add(Conv2D(64, (3, 3), activation = 'relu'))
+#     model.add(MaxPooling2D(pool_size=(2, 2)))
+
+#     model.add(Flatten())
+#     model.add(Dense(128, activation = 'relu'))
+#     model.add(Dropout(0.5))
+#     model.add(Dense(7, activation = 'softmax'))
+
+#     model.compile(loss='categorical_crossentropy', metrics=['accuracy'],optimizer='RMSprop')
+    
+#     # return model
+#     outputs = layers.Dense(num_classes, activation='softmax')(x)
+#     return keras.Model(inputs, outputs)
+
+
+
+
 def make_model(input_shape, num_classes, augment_data):
     global data_augmentation
+
     inputs = keras.Input(shape=input_shape)
 
     x = data_augmentation(inputs) if augment_data else keras.Sequential()(inputs)
@@ -67,28 +101,60 @@ def make_model(input_shape, num_classes, augment_data):
     x = layers.Conv2D(32, 3, strides=2, padding="same")(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation("relu")(x)
-    x = layers.Dropout(0.25)(x)
+    x = layers.MaxPooling2D(3)(x)
+
+    x = layers.Conv2D(64, 3, strides=2, padding="same")(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Activation("relu")(x)
+    x = layers.MaxPooling2D(3)(x)
+
+    x = layers.Conv2D(128, 3, strides=2, padding='same')(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Activation("relu")(x)
+    # x = layers.MaxPooling2D(3)(x)
+
+    x = layers.Flatten()(x)
+    x = layers.Dense(256, activation='relu')(x)
+    x = layers.Dropout(0.2)(x)
+    outputs = layers.Dense(7, activation='softmax')(x)
+
+    return keras.Model(inputs, outputs)
+
+
+def make_model1(input_shape, num_classes, augment_data):
+    global data_augmentation
+
+
+    inputs = keras.Input(shape=input_shape)
+
+    x = data_augmentation(inputs) if augment_data else keras.Sequential()(inputs)
+
+    x = layers.Rescaling(1.0 / 255)(x)
+    x = layers.Conv2D(32, 3, strides=2, padding="same")(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Activation("relu")(x)
+    x = layers.Dropout(0.1)(x)
 
     x = layers.Conv2D(64, 3, padding="same")(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation("relu")(x)
-    x = layers.Dropout(0.25)(x)
+    x = layers.Dropout(0.1)(x)
 
     previous_block_activation = x  # Set aside residual
 
-    for size in [128, 256, 512, 728]:
+    for size in [128, 256]:#, 512, 728]:
         x = layers.Activation("relu")(x)
         x = layers.SeparableConv2D(size, 3, padding="same")(x)
         x = layers.BatchNormalization()(x)
-        x = layers.Dropout(0.25)(x)
+        x = layers.Dropout(0.1)(x)
 
         x = layers.Activation("relu")(x)
         x = layers.SeparableConv2D(size, 3, padding="same")(x)
         x = layers.BatchNormalization()(x)
-        x = layers.Dropout(0.25)(x)
+        x = layers.Dropout(0.1)(x)
 
         x = layers.MaxPooling2D(3, strides=2, padding="same")(x)
-        x = layers.Dropout(0.25)(x)
+        x = layers.Dropout(0.1)(x)
 
         # Project residual
         residual = layers.Conv2D(size, 1, strides=2, padding="same")(
@@ -97,10 +163,10 @@ def make_model(input_shape, num_classes, augment_data):
         x = layers.add([x, residual])  # Add back residual
         previous_block_activation = x  # Set aside next residual
 
-    x = layers.SeparableConv2D(1024, 3, padding="same")(x)
+    x = layers.SeparableConv2D(512, 3, padding="same")(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation("relu")(x)
-    x = layers.Dropout(0.25)(x)
+    x = layers.Dropout(0.1)(x)
 
     x = layers.GlobalAveragePooling2D()(x)
     if num_classes == 2:
@@ -110,7 +176,7 @@ def make_model(input_shape, num_classes, augment_data):
         activation = "softmax"
         units = num_classes
 
-    x = layers.Dropout(0.5)(x)
+    x = layers.Dropout(0.1)(x)
     outputs = layers.Dense(units, activation=activation)(x)
     return keras.Model(inputs, outputs)
 
@@ -124,11 +190,14 @@ def set_model_compile(model):
 
 def set_model_fit(model, train_ds, epochs, val_ds):
     global callbacks
-    model.fit(train_ds, 
+    history = model.fit(
+        train_ds, 
         epochs=epochs, 
         callbacks=callbacks, 
-        validation_data=val_ds,)
-    return model
+        validation_data=val_ds,
+        workers=4,
+        use_multiprocessing=True)
+    return model, history
 
 def predict_on_target(model, path, image_size):
     img = keras.preprocessing.image.load_img(path, target_size=image_size)
@@ -145,7 +214,7 @@ def predict_on_target(model, path, image_size):
         5: 'Sad',
         6: 'Surprise'
     }
-    return emotion_map.get(index_max)
+    return emotion_map.get(index_max), predictions
 
 def restore_model(path):
     if path:
@@ -171,7 +240,11 @@ def map_emotion_genre():
                      'Crime','Science','Fiction','Horror','Family','Fantasy',
                      'Mystery','Animation','History','Music','War','Documentary'],
          
-         'Fear': [],
+         # ? Equal neutral to avoid error
+         'Fear': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
+                     'Crime','Science','Fiction','Horror','Family','Fantasy',
+                     'Mystery','Animation','History','Music','War','Documentary',
+                     'Western','Foreign','TV','Movie'],
 
          'Happy': ['Comedy','Thriller','Action','Romance','Adventure','Crime',
                    'Science','Fiction','Horror','Family','Fantasy','Mystery',
@@ -182,7 +255,11 @@ def map_emotion_genre():
                  'Crime','Science','Fiction','Horror','Family','Fantasy',
                  'Mystery','Animation','History','Music','War'],
 
-         'Surprise': [],
+         # ? Equal neutral to avoid error
+         'Surprise': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
+                     'Crime','Science','Fiction','Horror','Family','Fantasy',
+                     'Mystery','Animation','History','Music','War','Documentary',
+                     'Western','Foreign','TV','Movie'],
 
          'Neutral': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
                      'Crime','Science','Fiction','Horror','Family','Fantasy',
@@ -192,7 +269,7 @@ def map_emotion_genre():
 
     return m
 
-def give_me_movies(n_movies=10, emotion='Neutral'):
+def give_me_movies(n_movies, emotion):
     
     # todos os gêneros que uma emoção "aceita"
     all_genres = map_emotion_genre().get(emotion)
