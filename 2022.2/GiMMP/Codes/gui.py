@@ -194,7 +194,7 @@ class Ui(QtWidgets.QMainWindow):
         options = QFileDialog.Options()
         options |= QFileDialog.ReadOnly
         self.target_path, _ = QFileDialog.getOpenFileName(
-            self, "QFileDialog.getOpenFileName()", "", "Image File (*.jpg)", options=options)
+            self, "QFileDialog.getOpenFileName()", "", "Image File (*.png)", options=options)
         if self.target_path:
             self.im_target = QPixmap(self.target_path)
             self.label_11.setPixmap(self.im_target)

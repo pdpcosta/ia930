@@ -8,7 +8,8 @@ from tensorflow.keras import layers, preprocessing
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from keras.utils import generic_utils
+# from keras.utils import generic_utils
+# from classification_models.tfkeras import Classifiers
 
 
 image_size = (48, 48)
@@ -26,6 +27,18 @@ data_augmentation = keras.Sequential(
     ]
 )
 
+
+
+# def resnet():
+#     ResNet34, preprocess_input = Classifiers.get('resnet34')
+#     base_model = ResNet34(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
+
+
+
+
+
+
+
 def visualize_data():
 	plt.figure(figsize=(10, 10))
 	for images, labels in train_ds.take(1):
@@ -39,7 +52,8 @@ def visualize_data():
 def load_images():
     # load images
     train_ds = preprocessing.image_dataset_from_directory(
-        "FER2013/train",
+        # "FER2013/train",
+        "ckplus/ck/CK+48/train",
         validation_split=0.2,
         subset="training",
         seed=1337,
@@ -48,7 +62,8 @@ def load_images():
         label_mode="categorical"
     )
     val_ds = preprocessing.image_dataset_from_directory(
-        "FER2013/test",
+        # "FER2013/test",
+        "ckplus/ck/CK+48/validation",
         validation_split=0.2,
         subset="validation",
         seed=1337,
@@ -97,35 +112,37 @@ def make_model(input_shape, num_classes, augment_data):
 
     x = data_augmentation(inputs) if augment_data else keras.Sequential()(inputs)
 
-    x = layers.Rescaling(1.0 / 255)(x)
-    x = layers.Conv2D(32, 3, strides=2, padding="same")(x)
+    # x = layers.Rescaling(1.0 / 255)(x)
+    x = layers.Conv2D(6, 5, strides=2, padding="same")(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation("relu")(x)
-    x = layers.MaxPooling2D(3)(x)
+    x = layers.MaxPooling2D(2)(x)
 
-    x = layers.Conv2D(64, 3, strides=2, padding="same")(x)
+    x = layers.Conv2D(16, 5, strides=2, padding="same")(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation("relu")(x)
-    x = layers.MaxPooling2D(3)(x)
+    x = layers.MaxPooling2D(2)(x)
 
-    x = layers.Conv2D(128, 3, strides=2, padding='same')(x)
+    x = layers.Conv2D(64, 3, strides=2, padding='same')(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation("relu")(x)
-    # x = layers.MaxPooling2D(3)(x)
+    x = layers.MaxPooling2D(2)(x)
 
     x = layers.Flatten()(x)
-    x = layers.Dense(256, activation='relu')(x)
-    x = layers.Dropout(0.2)(x)
+    x = layers.Dense(128, activation='relu')(x)
+    x = layers.Dropout(0.6)(x)
     outputs = layers.Dense(7, activation='softmax')(x)
 
     return keras.Model(inputs, outputs)
 
 
-def make_model1(input_shape, num_classes, augment_data):
+def make_model_ok(input_shape, num_classes, augment_data):
     global data_augmentation
 
 
     inputs = keras.Input(shape=input_shape)
+
+    dropout_val = 0.05
 
     x = data_augmentation(inputs) if augment_data else keras.Sequential()(inputs)
 
@@ -133,28 +150,28 @@ def make_model1(input_shape, num_classes, augment_data):
     x = layers.Conv2D(32, 3, strides=2, padding="same")(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation("relu")(x)
-    x = layers.Dropout(0.1)(x)
+    x = layers.Dropout(dropout_val)(x)
 
     x = layers.Conv2D(64, 3, padding="same")(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation("relu")(x)
-    x = layers.Dropout(0.1)(x)
+    x = layers.Dropout(dropout_val)(x)
 
     previous_block_activation = x  # Set aside residual
 
-    for size in [128, 256]:#, 512, 728]:
+    for size in [128, 256, 512, 728]:
         x = layers.Activation("relu")(x)
         x = layers.SeparableConv2D(size, 3, padding="same")(x)
         x = layers.BatchNormalization()(x)
-        x = layers.Dropout(0.1)(x)
+        x = layers.Dropout(dropout_val)(x)
 
         x = layers.Activation("relu")(x)
         x = layers.SeparableConv2D(size, 3, padding="same")(x)
         x = layers.BatchNormalization()(x)
-        x = layers.Dropout(0.1)(x)
+        x = layers.Dropout(dropout_val)(x)
 
         x = layers.MaxPooling2D(3, strides=2, padding="same")(x)
-        x = layers.Dropout(0.1)(x)
+        x = layers.Dropout(dropout_val)(x)
 
         # Project residual
         residual = layers.Conv2D(size, 1, strides=2, padding="same")(
@@ -166,7 +183,7 @@ def make_model1(input_shape, num_classes, augment_data):
     x = layers.SeparableConv2D(512, 3, padding="same")(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation("relu")(x)
-    x = layers.Dropout(0.1)(x)
+    x = layers.Dropout(dropout_val)(x)
 
     x = layers.GlobalAveragePooling2D()(x)
     if num_classes == 2:
@@ -176,13 +193,14 @@ def make_model1(input_shape, num_classes, augment_data):
         activation = "softmax"
         units = num_classes
 
-    x = layers.Dropout(0.1)(x)
+    x = layers.Dropout(dropout_val)(x)
     outputs = layers.Dense(units, activation=activation)(x)
     return keras.Model(inputs, outputs)
 
 def set_model_compile(model):
     model.compile(
-        optimizer=keras.optimizers.Adam(1e-3),
+        optimizer=keras.optimizers.Adam(1e-4),
+        # optimizer="RMSprop",
         loss="categorical_crossentropy",
         metrics=["accuracy"]
     )
@@ -207,10 +225,10 @@ def predict_on_target(model, path, image_size):
     index_max = np.argmax(predictions[0])
     emotion_map = {
         0: 'Angry',
-        1: 'Disgust',
-        2: 'Fear',
-        3: 'Happy',
-        4: 'Neutral',
+        1: 'Contempt',
+        2: 'Disgust',
+        3: 'Fear',
+        4: 'Happy',
         5: 'Sad',
         6: 'Surprise'
     }
@@ -261,10 +279,10 @@ def map_emotion_genre():
                      'Mystery','Animation','History','Music','War','Documentary',
                      'Western','Foreign','TV','Movie'],
 
-         'Neutral': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
-                     'Crime','Science','Fiction','Horror','Family','Fantasy',
-                     'Mystery','Animation','History','Music','War','Documentary',
-                     'Western','Foreign','TV','Movie']
+         # 'Neutral': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
+         #             'Crime','Science','Fiction','Horror','Family','Fantasy',
+         #             'Mystery','Animation','History','Music','War','Documentary',
+         #             'Western','Foreign','TV','Movie']
          }
 
     return m
