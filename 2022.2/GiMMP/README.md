@@ -50,8 +50,8 @@ Espera-se que o programa seja capaz de identificar a emoção em uma imagem ou f
 
 O conjunto de expressões faciais FER-2013 foi substituído por um conjunto modificado do CK+ (apenas alguns frames dos vídeos originais foram coletados neste conjunto). O motivo da substituição foi a dificuldade em construir um modelo que generalizasse minimamente bem no conjunto FER-2013. Os resultados das tentativas frustradas estão presentes a seguir:
 
-![enter image description here](https://github.com/btguilherme/ia930/blob/main/GiMMP/graficos/dropout%200.25/acc.png?raw=true)
-![enter image description here](https://github.com/btguilherme/ia930/blob/main/GiMMP/graficos/dropout%200.25/loss.png?raw=true)
+![enter image description here](https://github.com/btguilherme/ia930/blob/main/2022.2/GiMMP/graficos/dropout%200.25/acc.png?raw=true)
+![enter image description here](https://github.com/btguilherme/ia930/blob/main/2022.2/GiMMP/graficos/dropout%200.25/loss.png?raw=true)
 
  1. **Extended Cohn-Kanade dataset (CK+)**: Base de dados com aproximadamente 981 imagens de faces humanas, subdivididas em 7 expressões faciais (0=Anger, 1=Contempt, 2=Disgust, 3=Fear, 4=Happy, 5=Sadness, 6=Surprise).
  
@@ -70,23 +70,23 @@ Onde as colunas informam a emoção, o total de imagens, quantidade de imagens p
 
 Após a troca de conjuntos de expressões faciais e alguns ajustes no código fonte, o resultado foi o seguinte:
 
-![enter image description here](https://github.com/btguilherme/ia930/blob/main/GiMMP/graficos/ck+%20dropout%200.6%20small%20model%20200%20epochs%20lr%201e-4/Figure_2.png?raw=true)
+![enter image description here](https://github.com/btguilherme/ia930/blob/main/2022.2/GiMMP/graficos/ck+%20dropout%200.6%20small%20model%20200%20epochs%20lr%201e-4/Figure_2.png?raw=true)
 
-![enter image description here](https://github.com/btguilherme/ia930/blob/main/GiMMP/graficos/ck+%20dropout%200.6%20small%20model%20200%20epochs%20lr%201e-4/Figure_1.png?raw=true)
+![enter image description here](https://github.com/btguilherme/ia930/blob/main/2022.2/GiMMP/graficos/ck+%20dropout%200.6%20small%20model%20200%20epochs%20lr%201e-4/Figure_1.png?raw=true)
 
 ### Abordagem escolhida
 
 O projeto foi desenvolvido em linguagem de programação Python, e a abordagem em Deep Learning foi escolhida pela facilidade (bibliotecas eficientes disponíveis, tais como pytorch e tensorflow) e oportunidade estudar e por em prática o assunto "Deep Learning" em um projeto prático.
 Algumas arquiteturas foram testadas ao decorrer do desenvolvimento do projeto e a que obteve melhores resultados em melhores tempos (tradeoff positivo) foi a arquitetura descrita a seguir:
 
-![enter image description here](https://github.com/btguilherme/ia930/blob/main/GiMMP/imagens/summary.png?raw=true)
+![enter image description here](https://github.com/btguilherme/ia930/blob/main/2022.2/GiMMP/imagens/summary.png?raw=true)
 
 ### Mapeamento "emoção vs gênero"
 
 Houve grande dificuldade em encontrar artigos científicos que que mapeassem uma determinada emoção com um determinado gênero de filme. Há grande disponibilidade de trabalhos que respondem **"qual emoção é expressa por um humano ao assistir determinado filme"**, por exemplo, mas nenhum trabalho responde a **"qual tipo [gênero] de filme devo assistir quando estou triste [, bravo, surpreso, com medo, etc]"**.
 Por isso, uma busca foi feita na internet buscando artigos não científicos, onde os autores sugeriam filmes ou gêneros de filmes para um determinado "mood".
 
-![enter image description here](https://github.com/btguilherme/ia930/blob/main/GiMMP/imagens/imdb.png?raw=true)
+![enter image description here](https://github.com/btguilherme/ia930/blob/main/2022.2/GiMMP/imagens/imdb.png?raw=true)
 
 Lista de referências:
 [https://psychcentral.com/depression/movies-to-uplift-you-from-depression](https://psychcentral.com/depression/movies-to-uplift-you-from-depression)
@@ -95,7 +95,7 @@ https://www.backtothemovies.com/heres-the-absolute-best-movies-to-watch-when-sic
 
 Com essas listas foi possível generalizar os gêneros de filmes para uma determinada emoção. 
 
-![enter image description here](https://github.com/btguilherme/ia930/blob/main/GiMMP/imagens;mapeamento_emo_genre.png?raw=true)
+![enter image description here](https://github.com/btguilherme/ia930/blob/main/2022.2/GiMMP/imagens/mapeamento_emo_genre.png?raw=true)
 
 Com certeza o mapeamento não está perfeito e 100% correto e ainda pode ser melhorado.
 
