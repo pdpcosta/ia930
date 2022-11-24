@@ -8,6 +8,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from keras.utils import plot_model
+from sklearn.metrics import roc_curve, auc
+from itertools import cycle
 
 
 image_size = (48, 48)
@@ -59,38 +61,6 @@ def load_images():
         label_mode="categorical"
     )
     return train_ds, val_ds
-
-
-
-
-
-
-# def xxxxxxx(input_shape, num_classes, augment_data):
-
-#     model = Sequential()
-#     model.add(Conv2D(6, (5, 5), input_shape=input_shape, padding='same', activation = 'relu'))
-#     model.add(MaxPooling2D(pool_size=(2, 2)))
-
-#     model.add(Conv2D(16, (5, 5), padding='same', activation = 'relu'))
-#     model.add(Activation('relu'))
-#     model.add(MaxPooling2D(pool_size=(2, 2)))
-
-#     model.add(Conv2D(64, (3, 3), activation = 'relu'))
-#     model.add(MaxPooling2D(pool_size=(2, 2)))
-
-#     model.add(Flatten())
-#     model.add(Dense(128, activation = 'relu'))
-#     model.add(Dropout(0.5))
-#     model.add(Dense(7, activation = 'softmax'))
-
-#     model.compile(loss='categorical_crossentropy', metrics=['accuracy'],optimizer='RMSprop')
-    
-#     # return model
-#     outputs = layers.Dense(num_classes, activation='softmax')(x)
-#     return keras.Model(inputs, outputs)
-
-
-
 
 def make_model(input_shape, num_classes, augment_data):
     global data_augmentation
@@ -308,35 +278,24 @@ def give_me_movies(n_movies, emotion):
 
     return movies
 
+def plot_roc_curve(model, val_ds):
+    final_label = list(map_emotion_genre().keys())
+    new_class = len(final_label)
+    y_pred = model.predict(val_ds)
+    labels = np.array([])
+    for x, y in val_ds:
+        labels = np.concatenate([labels, np.argmax(y.numpy(), axis=-1)])
+    y_test = np.zeros(y_pred.shape)
+    for l, c in enumerate(labels):
+        y_test[l, int(c)] = 1
+    lw = 2
+    fpr = dict()
+    tpr = dict()
+    roc_auc = dict()
+    for i in range(new_class):
+        fpr[i], tpr[i], _ = roc_curve(y_test[:,i], y_pred[:,i])
+        roc_auc[i] = auc(fpr[i], tpr[i])
+        
+    colors = cycle(['red', 'green','black','blue', 'yellow','purple','orange'])
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-# if __name__ == "__main__":
-#     train_ds, val_ds = load_images()
-#     data_augmentation = augmentation()
-#     train_ds = train_ds.prefetch(buffer_size=32)
-#     val_ds = val_ds.prefetch(buffer_size=32)
-#     model = make_model(input_shape=image_size + (3,), num_classes=num_classes)
-#     ##keras.utils.plot_model(model, show_shapes=True)
-    
-
-    
-    
-#     img = keras.preprocessing.image.load_img("FER2013/test/disgust/PrivateTest_21629266.jpg", target_size=image_size)
-#     img_array = keras.preprocessing.image.img_to_array(img)
-#     img_array = tf.expand_dims(img_array, 0)  # Create batch axis
-
-#     predictions = model.predict(img_array)
-#     score = predictions[0]
-#     print("This image is %.2f percent Disgust." % (100 * (1 - score)))
+    return new_class, colors, fpr, tpr, lw, final_label

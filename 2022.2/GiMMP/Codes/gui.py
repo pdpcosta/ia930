@@ -7,7 +7,7 @@ import datetime
 import matplotlib.pyplot as plt
 import qdarktheme
 from main import (load_images, make_model, set_model_compile, set_model_fit, 
-    predict_on_target, restore_model, save_model, give_me_movies)
+    predict_on_target, restore_model, save_model, give_me_movies, plot_roc_curve)
 
 
 class WorkerLoadImages(QObject):
@@ -141,53 +141,19 @@ class Ui(QtWidgets.QMainWindow):
         plt.show()
 
     def my_roc_curve(self):
-        pass
-        # from sklearn.metrics import roc_curve,auc
-        # from itertools import cycle
-        # import numpy as np
-
-        # new_label = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
-        # final_label = new_label
-        # new_class = len(new_label)
-
-        # y_pred_ravel = self.y_pred.ravel()
-        # lw = 2
-
-        # fpr = dict()
-        # tpr = dict()
-        # roc_auc = dict()
-
-        # y_test = [[-1] * len(new_label)]
-
-        # label_index = int(new_label.index(self.real_label))
-        # y_test[0][label_index] = 1
-
-
-        # print()
-        # print(y_test)
-        # print()
-        # print(self.y_pred)
-
-
-
-        # for i in range(new_class):
-        #     fpr[i], tpr[i], _ = roc_curve(y_test[:,i], self.y_pred[:,i])
-        #     roc_auc[i] = auc(fpr[i], tpr[i])
-            
-        # #colors = cycle(['red', 'green','black'])
-        # colors = cycle(['red', 'green','black','blue', 'yellow','purple','orange'])
-        # for i, color in zip(range(new_class), colors):
-        #     plt.plot(fpr[i], tpr[i], color=color, lw=lw,
-        #              label='ROC curve of class {0}'''.format(final_label[i]))
-
-        # plt.plot([0, 1], [0, 1], 'k--', lw=lw)
-        # plt.xlim([0, 1.0])
-        # plt.ylim([0.0, 1.05])
-        # plt.xlabel('False Positive Rate')
-        # plt.ylabel('True Positive Rate')
-        # plt.title('Receiver Operating Characteristic')
-        # plt.legend(loc="lower right")
-        # plt.show()
+        
+        new_class, colors, fpr, tpr, lw, final_label = plot_roc_curve(self.model, self.val_ds)
+        for i, color in zip(range(new_class), colors):
+            plt.plot(fpr[i], tpr[i], color=color, lw=lw,
+                     label='ROC curve of class {0}'''.format(final_label[i]))
+        plt.plot([0, 1], [0, 1], 'k--', lw=lw)
+        plt.xlim([0, 1.0])
+        plt.ylim([0.0, 1.05])
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
+        plt.title('Receiver Operating Characteristic')
+        plt.legend(loc="lower right")
+        plt.show()
 
 
     def open_target_face(self):
