@@ -1,6 +1,8 @@
 
+
+
 # `Dê-me-um-filme-por-favor`
-# `GiMMp (Give-Me-a-Movie-Please)`
+# `GiMMP (Give-Me-a-Movie-Please)`
 
 ## Apresentação
 
@@ -18,7 +20,8 @@ Nos últimos anos, a internet vem sendo utilizada por grande parte das pessoas p
 Portanto, o projeto será constituído de dois módulos principais:
 
  1. **Construção do modelo de classificação**: Construir um modelo de Inteligência Artificial capaz de detectar emoções em imagens de faces humanas.
- 2. **Sugerir filme**: Mapear o resultado obtido através do modelo com um ou mais títulos do catálogo de filmes.
+ 
+ 3. **Sugerir filme**: Mapear o resultado obtido através do modelo com um ou mais títulos do catálogo de filmes.
 
 Vídeo: https://youtu.be/KHQICMc6GZo
 
@@ -40,6 +43,72 @@ Artigos de referência:
 Caso a abordagem por DL seja escolhida, serão utilizadas as ferramentas Pytorch e/ou TensorFlow. Caso contrário, classificadores de padrão como SVM, RF, OPF, etc.
 
 Espera-se que o programa seja capaz de identificar a emoção em uma imagem ou foto com alta acurácia (~90%) para que o filme sugerido faça sentido.
+
+## Atualizações
+
+### Conjunto de dados
+
+O conjunto de expressões faciais FER-2013 foi substituído por um conjunto modificado do CK+ (apenas alguns frames dos vídeos originais foram coletados neste conjunto). O motivo da substituição foi a dificuldade em construir um modelo que generalizasse minimamente bem no conjunto FER-2013. Os resultados das tentativas frustradas estão presentes a seguir:
+
+![enter image description here](https://github.com/btguilherme/ia930/blob/main/GiMMP/graficos/dropout%200.25/acc.png?raw=true)
+![enter image description here](https://github.com/btguilherme/ia930/blob/main/GiMMP/graficos/dropout%200.25/loss.png?raw=true)
+
+ 1. **Extended Cohn-Kanade dataset (CK+)**: Base de dados com aproximadamente 981 imagens de faces humanas, subdivididas em 7 expressões faciais (0=Anger, 1=Contempt, 2=Disgust, 3=Fear, 4=Happy, 5=Sadness, 6=Surprise).
+ 
+ O conjunto de dados CK+ foi dividido da seguinte maneira:
+| Emotion | Total (100%) | Train (80% * Total) | Validation (15% * Total) | Test (5% * Total) | 
+|--|--|--|--|--|
+| Anger | 135 | 108 | 20 | 7 | 
+| Contempt | 54 | 43 | 8 | 3  | 
+| Disgust | 177 | 142 | 27 | 9 | 
+| Fear | 75 | 60 | 11 | 4 | 
+| Happy | 207 | 166 | 31 | 10 | 
+| Sadness | 84 | 67 | 13 | 4 | 
+| Surprise | 249 | 199 | 37 | 12 |
+
+Onde as colunas informam a emoção, o total de imagens, quantidade de imagens para o treinamento, quantidade de imagens para a validação e a quantidade de imagens para testes, respectivamente.
+
+Após a troca de conjuntos de expressões faciais e alguns ajustes no código fonte, o resultado foi o seguinte:
+
+![enter image description here](https://github.com/btguilherme/ia930/blob/main/GiMMP/graficos/ck+%20dropout%200.6%20small%20model%20200%20epochs%20lr%201e-4/Figure_2.png?raw=true)
+
+![enter image description here](https://github.com/btguilherme/ia930/blob/main/GiMMP/graficos/ck+%20dropout%200.6%20small%20model%20200%20epochs%20lr%201e-4/Figure_1.png?raw=true)
+
+### Abordagem escolhida
+
+O projeto foi desenvolvido em linguagem de programação Python, e a abordagem em Deep Learning foi escolhida pela facilidade (bibliotecas eficientes disponíveis, tais como pytorch e tensorflow) e oportunidade estudar e por em prática o assunto "Deep Learning" em um projeto prático.
+Algumas arquiteturas foram testadas ao decorrer do desenvolvimento do projeto e a que obteve melhores resultados em melhores tempos (tradeoff positivo) foi a arquitetura descrita a seguir:
+
+![enter image description here](https://github.com/btguilherme/ia930/blob/main/GiMMP/imagens/summary.png?raw=true)
+
+### Mapeamento "emoção vs gênero"
+
+Houve grande dificuldade em encontrar artigos científicos que que mapeassem uma determinada emoção com um determinado gênero de filme. Há grande disponibilidade de trabalhos que respondem **"qual emoção é expressa por um humano ao assistir determinado filme"**, por exemplo, mas nenhum trabalho responde a **"qual tipo [gênero] de filme devo assistir quando estou triste [, bravo, surpreso, com medo, etc]"**.
+Por isso, uma busca foi feita na internet buscando artigos não científicos, onde os autores sugeriam filmes ou gêneros de filmes para um determinado "mood".
+
+![enter image description here](https://github.com/btguilherme/ia930/blob/main/GiMMP/imagens/imdb.png?raw=true)
+
+Lista de referências:
+[https://psychcentral.com/depression/movies-to-uplift-you-from-depression](https://psychcentral.com/depression/movies-to-uplift-you-from-depression)
+https://www.imdb.com/list/ls053456706/
+https://www.backtothemovies.com/heres-the-absolute-best-movies-to-watch-when-sick/#:~:text=Here%E2%80%99s%20The%20Absolute%20Best%20Movies%20To%20Watch%20When,Potter%208%20Back%20to%20the%20Future%20Mais%20itens
+
+Com essas listas foi possível generalizar os gêneros de filmes para uma determinada emoção. 
+
+![enter image description here](https://github.com/btguilherme/ia930/blob/main/GiMMP/imagens;mapeamento_emo_genre.png?raw=true)
+
+Com certeza o mapeamento não está perfeito e 100% correto e ainda pode ser melhorado.
+
+## Apresentação [de slides] final
+https://docs.google.com/presentation/d/158R6Cg84hSFUIDmqNpi3KVTlbOrMy3Y--fU-KZN6Uss/edit?usp=sharing
+
+## Conclusões
+- Conjunto CK+ é muito mais simples que FER-2013 (desafio).
+- Tempo de aprendizado do modelo é muito mais rápido e com melhores resultados.
+- Taxa de aprendizagem é muito importante para o desenvolvimento do modelo.
+- Utilização de redes pré-treinadas, p.e. ResNet.
+- Mapeamento "emoções vs gênero" parece ser um campo de pesquisa em aberto.
+
 
 ## Cronograma
 
@@ -66,3 +135,9 @@ A seguir o possível cronograma:
  https://paperswithcode.com/dataset/fer2013
  
  https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata
+
+https://psychcentral.com/depression/movies-to-uplift-you-from-depression
+
+https://www.imdb.com/list/ls053456706/
+
+https://www.backtothemovies.com/heres-the-absolute-best-movies-to-watch-when-sick/#:~:text=Here%E2%80%99s%20The%20Absolute%20Best%20Movies%20To%20Watch%20When,Potter%208%20Back%20to%20the%20Future%20Mais%20itens

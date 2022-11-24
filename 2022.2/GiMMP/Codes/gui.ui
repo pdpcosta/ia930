@@ -19,6 +19,9 @@
   <property name="windowTitle">
    <string>GiMMP</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_6">
     <item>
@@ -309,7 +312,7 @@
         <item>
          <widget class="QLabel" name="label_12">
           <property name="styleSheet">
-           <string notr="true">color:green; background-color:black;</string>
+           <string notr="true">color:green;</string>
           </property>
           <property name="text">
            <string/>
@@ -344,7 +347,7 @@
         <item>
          <widget class="QLabel" name="label_13">
           <property name="styleSheet">
-           <string notr="true">color:yellow; background-color:black;</string>
+           <string notr="true">color:yellow;</string>
           </property>
           <property name="text">
            <string/>
@@ -517,7 +520,7 @@
          <item>
           <widget class="QPushButton" name="pushButtonBuildModel">
            <property name="styleSheet">
-            <string notr="true">background-color: red</string>
+            <string notr="true">background-color: rgb(163, 0, 0)</string>
            </property>
            <property name="text">
             <string>Build model</string>
@@ -530,7 +533,7 @@
             <bool>false</bool>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: red;</string>
+            <string notr="true">background-color: rgb(163, 0, 0)</string>
            </property>
            <property name="text">
             <string>Test model on target face</string>
@@ -586,7 +589,7 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionOpen_FER"/>
+    <addaction name="actionOpen_CK"/>
     <addaction name="actionOpen_Target_Face"/>
    </widget>
    <widget class="QMenu" name="menuModel">
@@ -599,9 +602,9 @@
    <addaction name="menuModel"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionOpen_FER">
+  <action name="actionOpen_CK">
    <property name="text">
-    <string>Open FER Dataset</string>
+    <string>Open CK+ Dataset</string>
    </property>
   </action>
   <action name="actionOpen_Target_Face">

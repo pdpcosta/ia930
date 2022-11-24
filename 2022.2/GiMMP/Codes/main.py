@@ -1,15 +1,13 @@
 # https://keras.io/examples/#computer-vision
 ## https://keras.io/examples/vision/image_classification_from_scratch/
 
-
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers, preprocessing
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-# from keras.utils import generic_utils
-# from classification_models.tfkeras import Classifiers
+from keras.utils import plot_model
 
 
 image_size = (48, 48)
@@ -17,7 +15,7 @@ batch_size = 32
 num_classes = 7
 
 callbacks = [
-    keras.callbacks.ModelCheckpoint("save_at_{epoch}.h5")
+    keras.callbacks.ModelCheckpoint("checkpoint\\save_at_{epoch}.h5")
 ]
 
 data_augmentation = keras.Sequential(
@@ -26,17 +24,6 @@ data_augmentation = keras.Sequential(
         layers.RandomRotation(0.1),
     ]
 )
-
-
-
-# def resnet():
-#     ResNet34, preprocess_input = Classifiers.get('resnet34')
-#     base_model = ResNet34(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
-
-
-
-
-
 
 
 def visualize_data():
@@ -136,7 +123,7 @@ def make_model(input_shape, num_classes, augment_data):
     return keras.Model(inputs, outputs)
 
 
-def make_model_ok(input_shape, num_classes, augment_data):
+def make_model_2(input_shape, num_classes, augment_data):
     global data_augmentation
 
 
@@ -204,6 +191,8 @@ def set_model_compile(model):
         loss="categorical_crossentropy",
         metrics=["accuracy"]
     )
+    # model.summary()
+    plot_model(model, to_file='model.png')
     return model
 
 def set_model_fit(model, train_ds, epochs, val_ds):
@@ -250,19 +239,20 @@ def save_model(model, path):
     # print(predictions)
 
 def map_emotion_genre():
-    m = {'Angry': ['Drama', 'Thriller', 'Action','Romance','Adventure','Crime',
-         'Science','Fiction','Horror','Family','Fantasy','Mystery','Animation',
-         'History','Music','War'],
+    m = {
+
+         'Angry': ['Drama', 'Thriller', 'Action','Romance','Adventure','Crime',
+                     'Science','Fiction','Horror','Family','Fantasy','Mystery',
+                     'Animation', 'History','Music','War'],
 
          'Disgust': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
                      'Crime','Science','Fiction','Horror','Family','Fantasy',
                      'Mystery','Animation','History','Music','War','Documentary'],
-         
-         # ? Equal neutral to avoid error
+
+         # ? Equal Sad to avoid error
          'Fear': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
-                     'Crime','Science','Fiction','Horror','Family','Fantasy',
-                     'Mystery','Animation','History','Music','War','Documentary',
-                     'Western','Foreign','TV','Movie'],
+                 'Crime','Science','Fiction','Horror','Family','Fantasy',
+                 'Mystery','Animation','History','Music','War'],
 
          'Happy': ['Comedy','Thriller','Action','Romance','Adventure','Crime',
                    'Science','Fiction','Horror','Family','Fantasy','Mystery',
@@ -273,11 +263,16 @@ def map_emotion_genre():
                  'Crime','Science','Fiction','Horror','Family','Fantasy',
                  'Mystery','Animation','History','Music','War'],
 
-         # ? Equal neutral to avoid error
-         'Surprise': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
-                     'Crime','Science','Fiction','Horror','Family','Fantasy',
-                     'Mystery','Animation','History','Music','War','Documentary',
-                     'Western','Foreign','TV','Movie'],
+         # ? Equal Happy to avoid error
+         'Surprise': ['Comedy','Thriller','Action','Romance','Adventure','Crime',
+                   'Science','Fiction','Horror','Family','Fantasy','Mystery',
+                   'Animation','History','Music','War','Documentary','Western',
+                   'Foreign','TV','Movie'],
+
+         # ? Equal Sad to avoid error
+         'Contempt': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
+                 'Crime','Science','Fiction','Horror','Family','Fantasy',
+                 'Mystery','Animation','History','Music','War'],
 
          # 'Neutral': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
          #             'Crime','Science','Fiction','Horror','Family','Fantasy',

@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QFileDialog
 import sys, os
 import datetime
 import matplotlib.pyplot as plt
+import qdarktheme
 from main import (load_images, make_model, set_model_compile, set_model_fit, 
     predict_on_target, restore_model, save_model, give_me_movies)
 
@@ -68,6 +69,7 @@ class Ui(QtWidgets.QMainWindow):
         self.initUi()
         self.pb_off()
         self.show()
+        self.load_samples_gui()
 
         self.image_size = (48, 48)
         self.batch_size = 32
@@ -79,7 +81,7 @@ class Ui(QtWidgets.QMainWindow):
 
     def initUi(self):
         self.pushButtonBuildModel.setEnabled(False)
-        self.actionOpen_FER.triggered.connect(self.open_fer)
+        self.actionOpen_CK.triggered.connect(self.open_ck)
         self.actionOpen_Target_Face.triggered.connect(self.open_target_face)
         self.actionRestore_model.triggered.connect(self.restore_model)
         self.comboBoxNumberSuggestions.currentIndexChanged[int].connect(
@@ -103,10 +105,9 @@ class Ui(QtWidgets.QMainWindow):
         for movie in movies:
             self.plainTextEditSuggestions.insertPlainText(movie[1] + '\n')
 
-    def open_fer(self):
+    def open_ck(self):
         self.pb_on()
         self.ui_off()
-        self.load_samples_gui()
         self.thread = QThread()
         self.worker = WorkerLoadImages()
         self.worker.moveToThread(self.thread)
@@ -225,14 +226,6 @@ class Ui(QtWidgets.QMainWindow):
         self.thread.start()
 
     def restore_model(self):
-        # self.model_path = None
-        # self.model_path = QFileDialog.getExistingDirectory(
-        #     self, "Select the model folder")
-        # if self.model_path:
-        #     self.model = restore_model(self.model_path)
-        #     self.modelBuit = True
-        #     self.enable_test_model_on_target_btn()
-
         self.model_path = None
         options = QFileDialog.Options()
         options |= QFileDialog.ReadOnly
@@ -242,6 +235,7 @@ class Ui(QtWidgets.QMainWindow):
             self.model = restore_model(self.model_path)
             self.modelBuit = True
             self.enable_test_model_on_target_btn()
+            self.comboBoxNumberSuggestions.setEnabled(True)
 
     def set_model(self, obj):
         self.model = obj[0]
@@ -264,15 +258,15 @@ class Ui(QtWidgets.QMainWindow):
         self.dsLoaded = True
         self.comboBoxNumberSuggestions.setEnabled(True)
         self.pushButtonBuildModel.setStyleSheet(
-            "background-color: yellow;")
+            "background-color: rgb(179, 179, 0);")
 
     def enable_test_model_on_target_btn(self):
-        b = (True, "green") if self.real_label is not None and self.modelBuit else (False, "red")
+        b = (True, "rgb(0, 85, 0)") if self.real_label is not None and self.modelBuit else (False, "rgb(163, 0, 0)")
         self.pushButtonTestOnTarget.setEnabled(b[0])
         self.pushButtonTestOnTarget.setStyleSheet("background-color: " + b[1] + ";")
 
     def number_suggestions_changed(self, index):
-        b = (True, "green") if index != 0 and self.dsLoaded else (False, "yellow")
+        b = (True, "rgb(0, 85, 0)") if index != 0 and self.dsLoaded else (False, "rgb(179, 179, 0)")
         self.pushButtonBuildModel.setEnabled(b[0])
         self.pushButtonBuildModel.setStyleSheet("background-color: " + b[1] + ";")
 
@@ -289,38 +283,39 @@ class Ui(QtWidgets.QMainWindow):
         self.setEnabled(True)
 
     def load_samples_gui(self):
-        self.im_1 = QPixmap('.\\FER2013\\train\\angry\\Training_3908.jpg')
+        self.im_1 = QPixmap('.\\ckplus\\ck\\CK+48\\train\\angry\\S011_004_00000020.png')
         self.label_1.setPixmap(self.im_1)
 
-        self.im_2 = QPixmap('.\\FER2013\\train\\disgust\\Training_5420780.jpg')
+        self.im_2 = QPixmap('.\\ckplus\\ck\\CK+48\\train\\disgust\\S011_005_00000019.png')
         self.label_2.setPixmap(self.im_2)
 
-        self.im_3 = QPixmap('.\\FER2013\\train\\fear\\Training_358270.jpg')
+        self.im_3 = QPixmap('.\\ckplus\\ck\\CK+48\\train\\fear\\S050_001_00000016.png')
         self.label_3.setPixmap(self.im_3)
 
-        self.im_4 = QPixmap('.\\FER2013\\train\\happy\\Training_177442.jpg')
+        self.im_4 = QPixmap('.\\ckplus\\ck\\CK+48\\train\\happy\\S010_006_00000014.png')
         self.label_4.setPixmap(self.im_4)
 
-        self.im_5 = QPixmap('.\\FER2013\\train\\neutral\\Training_780242.jpg')
+        self.im_5 = QPixmap('.\\ckplus\\ck\\CK+48\\train\\contempt\\S505_002_00000019.png')
         self.label_5.setPixmap(self.im_5)
 
-        self.im_6 = QPixmap('.\\FER2013\\train\\sad\\Training_5682645.jpg')
+        self.im_6 = QPixmap('.\\ckplus\\ck\\CK+48\\train\\sad\\S011_002_00000020.png')
         self.label_6.setPixmap(self.im_6)
 
-        self.im_7 = QPixmap('.\\FER2013\\train\\surprise\\Training_5070080.jpg')
+        self.im_7 = QPixmap('.\\ckplus\\ck\\CK+48\\train\\surprise\\S053_001_00000023.png')
         self.label_7.setPixmap(self.im_7)
 
-        self.im_8 = QPixmap('.\\FER2013\\train\\angry\\Training_3908.jpg')
+        self.im_8 = QPixmap('.\\ckplus\\ck\\CK+48\\train\\angry\\S112_005_00000017.png')
         self.label_8.setPixmap(self.im_8)
 
-        self.im_9 = QPixmap('.\\FER2013\\train\\fear\\Training_698141.jpg')
+        self.im_9 = QPixmap('.\\ckplus\\ck\\CK+48\\train\\fear\\S504_004_00000015.png')
         self.label_9.setPixmap(self.im_9)
 
-        self.im_10 = QPixmap('.\\FER2013\\train\\happy\\Training_3815265.jpg')
+        self.im_10 = QPixmap('.\\ckplus\\ck\\CK+48\\train\\happy\\S087_005_00000012.png')
         self.label_10.setPixmap(self.im_10)
 
 
 app = QtWidgets.QApplication(sys.argv)
+app.setStyleSheet(qdarktheme.load_stylesheet())
 window = Ui()
 app.exec_()
 
