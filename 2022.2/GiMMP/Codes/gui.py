@@ -52,8 +52,6 @@ class WorkerTrainModel(QObject):
             self.val_ds
         )
 
-        
-
         save_model_filename = str(datetime.datetime.now()).replace(' ', '_at_').replace(':', '')
         # os.mkdir(os.path.join(os.getcwd(), 'saved_models'))
         save_model(self.model, 'saved_models/' + save_model_filename + '.hdf5')
@@ -141,7 +139,6 @@ class Ui(QtWidgets.QMainWindow):
         plt.show()
 
     def my_roc_curve(self):
-        
         new_class, colors, fpr, tpr, lw, final_label = plot_roc_curve(self.model, self.val_ds)
         for i, color in zip(range(new_class), colors):
             plt.plot(fpr[i], tpr[i], color=color, lw=lw,
@@ -154,7 +151,6 @@ class Ui(QtWidgets.QMainWindow):
         plt.title('Receiver Operating Characteristic')
         plt.legend(loc="lower right")
         plt.show()
-
 
     def open_target_face(self):
         self.target_path = None
@@ -284,5 +280,4 @@ app = QtWidgets.QApplication(sys.argv)
 app.setStyleSheet(qdarktheme.load_stylesheet())
 window = Ui()
 app.exec_()
-
 

@@ -58,7 +58,8 @@ def load_images():
         seed=1337,
         image_size=image_size,
         batch_size=batch_size,
-        label_mode="categorical"
+        label_mode="categorical",
+        labels="inferred"
     )
     return train_ds, val_ds
 
@@ -92,10 +93,9 @@ def make_model(input_shape, num_classes, augment_data):
 
     return keras.Model(inputs, outputs)
 
-
+# deprecated
 def make_model_2(input_shape, num_classes, augment_data):
     global data_augmentation
-
 
     inputs = keras.Input(shape=input_shape)
 
@@ -162,7 +162,7 @@ def set_model_compile(model):
         metrics=["accuracy"]
     )
     # model.summary()
-    plot_model(model, to_file='model.png')
+    # plot_model(model, to_file='model.png')
     return model
 
 def set_model_fit(model, train_ds, epochs, val_ds):
@@ -215,6 +215,11 @@ def map_emotion_genre():
                      'Science','Fiction','Horror','Family','Fantasy','Mystery',
                      'Animation', 'History','Music','War'],
 
+         # ? Equal Sad to avoid error
+         'Contempt': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
+                 'Crime','Science','Fiction','Horror','Family','Fantasy',
+                 'Mystery','Animation','History','Music','War'],
+
          'Disgust': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
                      'Crime','Science','Fiction','Horror','Family','Fantasy',
                      'Mystery','Animation','History','Music','War','Documentary'],
@@ -238,11 +243,6 @@ def map_emotion_genre():
                    'Science','Fiction','Horror','Family','Fantasy','Mystery',
                    'Animation','History','Music','War','Documentary','Western',
                    'Foreign','TV','Movie'],
-
-         # ? Equal Sad to avoid error
-         'Contempt': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
-                 'Crime','Science','Fiction','Horror','Family','Fantasy',
-                 'Mystery','Animation','History','Music','War'],
 
          # 'Neutral': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
          #             'Crime','Science','Fiction','Horror','Family','Fantasy',
@@ -281,13 +281,16 @@ def give_me_movies(n_movies, emotion):
 def plot_roc_curve(model, val_ds):
     final_label = list(map_emotion_genre().keys())
     new_class = len(final_label)
-    y_pred = model.predict(val_ds)
-    labels = np.array([])
+
+    y_pred = np.array([], dtype=np.int)
+    y_test =  np.array([], dtype=np.int)
     for x, y in val_ds:
-        labels = np.concatenate([labels, np.argmax(y.numpy(), axis=-1)])
-    y_test = np.zeros(y_pred.shape)
-    for l, c in enumerate(labels):
-        y_test[l, int(c)] = 1
+        y_pred = np.concatenate([y_pred, np.argmax(model.predict(x), axis=-1)])
+        y_test = np.concatenate([y_test, np.argmax(y.numpy(), axis=-1)])    
+
+    y_pred = get_matrix(y_pred)
+    y_test = get_matrix(y_test)
+
     lw = 2
     fpr = dict()
     tpr = dict()
@@ -295,7 +298,11 @@ def plot_roc_curve(model, val_ds):
     for i in range(new_class):
         fpr[i], tpr[i], _ = roc_curve(y_test[:,i], y_pred[:,i])
         roc_auc[i] = auc(fpr[i], tpr[i])
-        
     colors = cycle(['red', 'green','black','blue', 'yellow','purple','orange'])
-
     return new_class, colors, fpr, tpr, lw, final_label
+
+def get_matrix(indexes):
+    indexesT = indexes.T
+    a = np.zeros((len(indexes), 7))
+    a[range(len(indexes)), indexesT] = 1
+    return a

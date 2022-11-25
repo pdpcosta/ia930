@@ -74,6 +74,8 @@ Após a troca de conjuntos de expressões faciais e alguns ajustes no código fo
 
 ![enter image description here](https://github.com/btguilherme/ia930/blob/main/2022.2/GiMMP/graficos/ck+%20dropout%200.6%20small%20model%20200%20epochs%20lr%201e-4/Figure_1.png?raw=true)
 
+![enter image description here](https://github.com/btguilherme/ia930/blob/main/2022.2/GiMMP/graficos/ck+%20dropout%200.6%20small%20model%20200%20epochs%20lr%201e-4/ROC.png?raw=true)
+
 ### Abordagem escolhida
 
 O projeto foi desenvolvido em linguagem de programação Python, e a abordagem em Deep Learning foi escolhida pela facilidade (bibliotecas eficientes disponíveis, tais como pytorch e tensorflow) e oportunidade estudar e por em prática o assunto "Deep Learning" em um projeto prático.
