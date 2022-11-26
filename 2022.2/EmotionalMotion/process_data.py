@@ -5,12 +5,12 @@ from tqdm import tqdm
 
 DATA_DIR = 'data/'
 FREQ_RATE = 24 # Frquência de amostragem dos sensores
-WINDOW_SIZE = 3 # Tamanho das janelas para extração de features em segundos
-OVERLAP = 0.1
+WINDOW_SIZE = 5 # Tamanho das janelas para extração de features em segundos
+OVERLAP = 0.5
 
 # Função de filtragem definida separadamente para controle dos parâmetros
 def filter_noise(seq):
-    return signal.medfilt(seq, kernel_size=3)
+    return signal.medfilt(seq, kernel_size=5)
 
 def extract_features(window):
     '''
@@ -71,6 +71,13 @@ def extract_features(window):
         ds_dt = sensor_data[1:] - sensor_data[:-1]
         d2s_dt2 = ds_dt[1:] - ds_dt[:-1]
         features.append(np.nonzero(d2s_dt2)[0].size / sensor_data.shape[0]) # Mudança de inclinação
+
+        fft_coef = 2*np.abs(np.fft.rfft(sensor_data)[:15])
+        features.extend(fft_coef)
+
+        features.append(fft_coef.mean())
+
+        features.append(np.mean(np.power(fft_coef, 2)))
 
 #        norm = sensor_data / max
 #        p = norm / np.sum(norm)
