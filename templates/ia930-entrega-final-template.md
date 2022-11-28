@@ -14,7 +14,7 @@ oferecida no segundo semestre de 2022, na Unicamp, sob supervisão da Profa. Dra
 > | Nome3  | 123456  | XXX|
 
 
-## Descrição do Projeto (:warning: Atualizar de acordo com a proposta final do projeot :warning:)
+## Descrição do Projeto (:warning: Atualizar de acordo com a proposta final do projeto :warning:)
 > Atualizar as informações associadas à descrição do projeto.
 > Descrição do tema do projeto, incluindo contexto gerador, motivação.
 > Descrição do objetivo principal do projeto.
