@@ -1,0 +1,7 @@
+*.pyc
+*.exe
+cuda_11.3.0_465.89_win10.exe
+cudnn64_8.zip
+cudnn-windows-x86_64-8.6.0.163_cuda11-archive.zip
+save_at_*
+*.hdf5
