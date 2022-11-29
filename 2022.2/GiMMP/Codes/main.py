@@ -204,18 +204,15 @@ def save_model(model, path):
         tf.keras.models.save_model(model, path)
 
     # score = predictions[0]
-
     # print(predictions[0])
     # print(predictions)
 
 def map_emotion_genre():
     m = {
-
          'Angry': ['Drama', 'Thriller', 'Action','Romance','Adventure','Crime',
                      'Science','Fiction','Horror','Family','Fantasy','Mystery',
                      'Animation', 'History','Music','War'],
 
-         # ? Equal Sad to avoid error
          'Contempt': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
                  'Crime','Science','Fiction','Horror','Family','Fantasy',
                  'Mystery','Animation','History','Music','War'],
@@ -224,7 +221,6 @@ def map_emotion_genre():
                      'Crime','Science','Fiction','Horror','Family','Fantasy',
                      'Mystery','Animation','History','Music','War','Documentary'],
 
-         # ? Equal Sad to avoid error
          'Fear': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
                  'Crime','Science','Fiction','Horror','Family','Fantasy',
                  'Mystery','Animation','History','Music','War'],
@@ -238,16 +234,10 @@ def map_emotion_genre():
                  'Crime','Science','Fiction','Horror','Family','Fantasy',
                  'Mystery','Animation','History','Music','War'],
 
-         # ? Equal Happy to avoid error
          'Surprise': ['Comedy','Thriller','Action','Romance','Adventure','Crime',
                    'Science','Fiction','Horror','Family','Fantasy','Mystery',
                    'Animation','History','Music','War','Documentary','Western',
-                   'Foreign','TV','Movie'],
-
-         # 'Neutral': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
-         #             'Crime','Science','Fiction','Horror','Family','Fantasy',
-         #             'Mystery','Animation','History','Music','War','Documentary',
-         #             'Western','Foreign','TV','Movie']
+                   'Foreign','TV','Movie']
          }
 
     return m
