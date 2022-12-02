@@ -106,10 +106,16 @@ def extract_features(window):
 
     return features
 
-def load_and_extract(root_dir):
+def load_and_extract(root_dir, files_names=None, debug=True, w_overlap=OVERLAP):
     processed_data = []
 
-    pbar = tqdm(sorted(listdir(root_dir)), total=len(listdir(root_dir)))
+    if files_names is None:
+        files_names = [name for name in listdir(root_dir)]
+
+    if debug:
+        pbar = tqdm(sorted(files_names), total=len(files_names))
+    else:
+        pbar = sorted(files_names)
     for file_name in pbar:
         # Carrega os dados do arquivo
         data = np.loadtxt(root_dir + file_name, delimiter=',')
@@ -131,7 +137,7 @@ def load_and_extract(root_dir):
         segment_size = WINDOW_SIZE * FREQ_RATE
         segmented_data = []
         for segment in organized_data:
-            step = int(segment_size * (1 - OVERLAP))
+            step = int(segment_size * (1 - w_overlap))
             idxs = np.array([list(range(i, i+segment_size)) for i in range(0, segment.shape[0]-segment_size, step)])
             segmented_data.append(segment[idxs])
 
@@ -140,7 +146,7 @@ def load_and_extract(root_dir):
         for label in range(len(segmented_data)):
             for window in segmented_data[label]:
                 vectorized_data.append(extract_features(window[:, :3]) + extract_features(window[:, 3:]) + [label])
-
+                
         processed_data.extend(vectorized_data)
 
     return np.asarray(processed_data)
