@@ -1,9 +1,11 @@
+import matplotlib.pyplot as plt
 import numpy as np
-from os import listdir
+from os import listdir, path, makedirs
 from scipy import signal, stats, spatial
 from tqdm import tqdm
 
 DATA_DIR = 'data/'
+IMG_DIR = 'images/'
 FREQ_RATE = 24 # Frquência de amostragem dos sensores
 WINDOW_SIZE = 5 # Tamanho das janelas para extração de features em segundos
 OVERLAP = 0.5
@@ -106,6 +108,21 @@ def extract_features(window):
 
     return features
 
+def organize_data(root_dir, file_name):
+    # Carrega os dados do arquivo
+    data = np.loadtxt(root_dir + file_name, delimiter=',')
+
+    # Extrai coluna contendo os labels de emoção
+    labels = data[:,1]
+
+    # Extrai os dados capturados para cada label
+    organized_data = []
+    organized_data.append(data[np.where(labels == -1)[0], 2:-1])
+    organized_data.append(data[np.where(labels == 0)[0], 2:-1])
+    organized_data.append(data[np.where(labels == 1)[0], 2:-1])
+    
+    return organized_data
+
 def load_and_extract(root_dir, files_names=None, debug=True, w_overlap=OVERLAP):
     processed_data = []
 
@@ -117,18 +134,9 @@ def load_and_extract(root_dir, files_names=None, debug=True, w_overlap=OVERLAP):
     else:
         pbar = sorted(files_names)
     for file_name in pbar:
-        # Carrega os dados do arquivo
-        data = np.loadtxt(root_dir + file_name, delimiter=',')
-
-        # Extrai coluna contendo os labels de emoção
-        labels = data[:,1]
-
-        # Extrai os dados capturados para cada label
-        organized_data = []
-        organized_data.append(data[np.where(labels == -1)[0], 2:-1])
-        organized_data.append(data[np.where(labels == 0)[0], 2:-1])
-        organized_data.append(data[np.where(labels == 1)[0], 2:-1])
-
+        # Separa os dados entre emoções
+        organized_data = organize_data(root_dir, file_name)
+        
         # Aplica filtro de média móvel ao longo dos sinais dos sensores
         organized_data = [np.apply_along_axis(filter_noise, 0, segment) for segment in organized_data]
 
@@ -150,6 +158,74 @@ def load_and_extract(root_dir, files_names=None, debug=True, w_overlap=OVERLAP):
         processed_data.extend(vectorized_data)
 
     return np.asarray(processed_data)
+
+def plot_data(organized_data, file_name):
+    img_path = IMG_DIR+f'/{file_name}'
+    if not path.exists(img_path):
+        makedirs(img_path)
+        
+    labels = ['Negativo', 'Neutro', 'Positivo']
+    # Acelerômetro
+    # Eixo X
+    plt.figure()
+    plt.title('Dado bruto do Acelerômetro - Eixo X')
+    for i, label in enumerate(labels):
+        plt.plot(organized_data[i].T[0], label=f'Valência: {label}')
+    plt.xlabel('Samples')
+    plt.ylabel('Leitura do Sensor')
+    plt.legend()
+    plt.savefig(img_path+'/acc_x_axis.png',bbox_inches='tight')
+    
+    # Eixo Y
+    plt.figure()
+    plt.title('Dado bruto do Acelerômetro - Eixo Y')
+    for i, label in enumerate(labels):
+        plt.plot(organized_data[i].T[1], label=f'Valência: {label}')
+    plt.xlabel('Samples')
+    plt.ylabel('Leitura do Sensor')
+    plt.legend()
+    plt.savefig(img_path+'/acc_y_axis.png',bbox_inches='tight')
+    
+    # Eixo Z
+    plt.figure()
+    plt.title('Dado bruto do Acelerômetro - Eixo Z')
+    for i, label in enumerate(labels):
+        plt.plot(organized_data[i].T[2], label=f'Valência: {label}')
+    plt.xlabel('Samples')
+    plt.ylabel('Leitura do Sensor')
+    plt.legend()
+    plt.savefig(img_path+'/acc_z_axis.png',bbox_inches='tight')
+    
+    # Giroscóspio
+    # Roll
+    plt.figure()
+    plt.title('Dado bruto do Giroscópio - Roll')
+    for i, label in enumerate(labels):
+        plt.plot(organized_data[i].T[3], label=f'Valência: {label}')
+    plt.xlabel('Samples')
+    plt.ylabel('Leitura do Sensor')
+    plt.legend()
+    plt.savefig(img_path+'/giro_roll.png',bbox_inches='tight')
+    
+    # Pitch 
+    plt.figure()
+    plt.title('Dado bruto do Giroscópio - Pitch')
+    for i, label in enumerate(labels):
+        plt.plot(organized_data[i].T[4], label=f'Valência: {label}')
+    plt.xlabel('Samples')
+    plt.ylabel('Leitura do Sensor')
+    plt.legend()
+    plt.savefig(img_path+'/giro_pitch.png',bbox_inches='tight')
+    
+    # Yaw
+    plt.figure()
+    plt.title('Dado bruto do Giroscópio - Yaw')
+    for i, label in enumerate(labels):
+        plt.plot(organized_data[i].T[5], label=f'Valência: {label}')
+    plt.xlabel('Samples')
+    plt.ylabel('Leitura do Sensor')
+    plt.legend()
+    plt.savefig(img_path+'/giro_yaw.png',bbox_inches='tight')
 
 if __name__ == "__main__":
     preprocess_data(DATA_DIR)
