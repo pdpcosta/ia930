@@ -7,12 +7,12 @@ from tqdm import tqdm
 DATA_DIR = 'data/'
 IMG_DIR = 'images/'
 FREQ_RATE = 24 # Frquência de amostragem dos sensores
-WINDOW_SIZE = 3 # Tamanho das janelas para extração de features em segundos
-OVERLAP = 0.1
+WINDOW_SIZE = 5 # Tamanho das janelas para extração de features em segundos
+OVERLAP = 0.5
 
 # Função de filtragem definida separadamente para controle dos parâmetros
 def filter_noise(seq):
-    return signal.medfilt(seq, kernel_size=3)
+    return signal.medfilt(seq, kernel_size=5)
 
 def extract_features(window):
     '''
@@ -74,9 +74,16 @@ def extract_features(window):
         d2s_dt2 = ds_dt[1:] - ds_dt[:-1]
         features.append(np.nonzero(d2s_dt2)[0].size / sensor_data.shape[0]) # Mudança de inclinação
 
-        norm = sensor_data / max
-        p = norm / np.sum(norm)
-        features.append(stats.entropy(p)) # Entropia
+        fft_coef = 2*np.abs(np.fft.rfft(sensor_data)[:15])
+        features.extend(fft_coef)
+
+        features.append(fft_coef.mean())
+
+        features.append(np.mean(np.power(fft_coef, 2)))
+
+#        norm = sensor_data / max
+#        p = norm / np.sum(norm)
+#        features.append(stats.entropy(p)) # Entropia
 
 
     # Features por sensor (dependem da combinação dos eixos x, y e z)
@@ -116,10 +123,16 @@ def organize_data(root_dir, file_name):
     
     return organized_data
 
-def preprocess_data(root_dir):
+def load_and_extract(root_dir, files_names=None, debug=True, w_overlap=OVERLAP):
     processed_data = []
 
-    pbar = tqdm(listdir(root_dir), total=len(listdir(root_dir)))
+    if files_names is None:
+        files_names = [name for name in listdir(root_dir)]
+
+    if debug:
+        pbar = tqdm(sorted(files_names), total=len(files_names))
+    else:
+        pbar = sorted(files_names)
     for file_name in pbar:
         # Separa os dados entre emoções
         organized_data = organize_data(root_dir, file_name)
@@ -132,7 +145,7 @@ def preprocess_data(root_dir):
         segment_size = WINDOW_SIZE * FREQ_RATE
         segmented_data = []
         for segment in organized_data:
-            step = int(segment_size * (1 - OVERLAP))
+            step = int(segment_size * (1 - w_overlap))
             idxs = np.array([list(range(i, i+segment_size)) for i in range(0, segment.shape[0]-segment_size, step)])
             segmented_data.append(segment[idxs])
 
@@ -140,12 +153,11 @@ def preprocess_data(root_dir):
         vectorized_data = []
         for label in range(len(segmented_data)):
             for window in segmented_data[label]:
-                vectorized_data.append(extract_features(window[:, :3]) + [label])
-                vectorized_data.append(extract_features(window[:, -3:]) + [label])
+                vectorized_data.append(extract_features(window[:, :3]) + extract_features(window[:, 3:]) + [label])
+                
+        processed_data.extend(vectorized_data)
 
-        processed_data.append(vectorized_data)
-
-    return processed_data
+    return np.asarray(processed_data)
 
 def plot_data(organized_data, file_name):
     img_path = IMG_DIR+f'/{file_name}'
