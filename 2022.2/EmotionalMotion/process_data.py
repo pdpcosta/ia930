@@ -8,7 +8,7 @@ DATA_DIR = 'data/'
 IMG_DIR = 'images/'
 FREQ_RATE = 24 # Frquência de amostragem dos sensores
 WINDOW_SIZE = 5 # Tamanho das janelas para extração de features em segundos
-OVERLAP = 0.5
+OVERLAP = 0
 
 # Função de filtragem definida separadamente para controle dos parâmetros
 def filter_noise(seq):

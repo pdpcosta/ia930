@@ -1,0 +1,6 @@
+from models.SelectMusicByEmotion import select_music_by_emotion
+from models.OpenMusicSelectedOnYoutube import open_music_selected_on_youtube
+from models.LoadAndExtractFeatures import organize_data
+
+organize_data()
+
