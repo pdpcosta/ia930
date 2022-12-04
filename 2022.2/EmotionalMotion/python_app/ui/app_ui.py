@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog as fd
 from tkinter.messagebox import showinfo
-
 from models.LoadAndExtractFeatures import load_data_only_one
 from models.PredictEmotion import get_emotion_preedicted_by
 from models.SelectMusicByEmotion import select_music_by_emotion
@@ -43,7 +42,7 @@ def main(root_directory=None):
     showinfo(
         title='E-Predicted',
         message=['Negativa', 'Neutra', 'Positiva'][emotion_predicted],
-    ).
+    )
     music_selected = select_music_by_emotion(str(emotion_predicted))
     open_music_selected_on_youtube(music_selected)
 

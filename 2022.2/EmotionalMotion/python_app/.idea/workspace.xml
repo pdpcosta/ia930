@@ -5,24 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3895703f-51ee-4bb6-85fe-c9c67a53b48e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../android_app/app/src/main/java/com/feecia930/emotionalmotion/MainActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_app/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/classifier_model_RFC/MODEL_CONST.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/classifier_model_RFC/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/LoadAndExtractFeatures.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/OpenMusicSelectedOnYoutube.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/PredictEmotion.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/ReadCSVFile.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/SelectMusicByEmotion.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/music_data/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/app_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../data_extractor_music_emotion/data_extractor.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../data_extractor_music_emotion/data_extractor.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../process_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/../process_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classifier_model_RFC/MODEL_CONST.py" beforeDir="false" afterPath="$PROJECT_DIR$/classifier_model_RFC/MODEL_CONST.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/music_data/MUSIC_DATA_CONST.py" beforeDir="false" afterPath="$PROJECT_DIR$/music_data/MUSIC_DATA_CONST.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/app_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/app_ui.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,19 +34,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\engda\OneDrive\Documentos\IA930\ia930\2022.2\EmotionalMotion\python_app\music_data" />
       <recent name="C:\Users\engda\OneDrive\Documentos\IA930\ia930\2022.2\EmotionalMotion\python_app\models" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.app_ui">
+  <component name="RunManager" selected="Python.main">
     <configuration name="MUSIC_DATA_CONST" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="python_app" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -208,15 +195,6 @@
     <servers />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>8</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="what_is_this[1]" />
