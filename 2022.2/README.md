@@ -51,7 +51,7 @@ Resultados também ruins:  34,6% de acurácia no conjunto de testes.
 
 
 ## Notebooks 
-- [Notebooks(/notebooks/)
+- [Notebooks](/notebooks/)
  
 ## Discussão
  
