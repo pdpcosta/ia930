@@ -51,8 +51,7 @@ Resultados também ruins:  34,6% de acurácia no conjunto de testes.
 
 
 ## Notebooks 
-- [FBNews_classification](/notebooks/FBNews_classification.ipynb)
-- [Model_Training](/notebooks/Model_Training.ipynb)
+- [Notebooks(/notebooks/)
  
 ## Discussão
  
