@@ -9,7 +9,7 @@ O presente projeto foi originado no contexto das atividades da disciplina de pó
 | Douglas Esteves  | 189697  | Eng. de Computação  | 
 | Pedro Fracarolli | 191535  | Analista de Sistemas|
  
-## Descrição do Projeto (:warning: Atualizar de acordo com a proposta final do projeto :warning:)
+## Descrição do Projeto:
  
 Veículos de mídia e redes sociais têm interesse em aumentar o engajamento de seus usuários em conteúdos publicados, a fim de aumentar a probabilidade de que os mesmos geram interações com anúncios e, portanto, mais lucro. Uma das formas de se obter esse aumento de engajamento é através de conteúdo que gere raiva ou desconforto nos usuários, de forma que os mesmos se sintam compelidos a agir através de comentários, desta forma promovendo algo que seja de interesse dos anunciantes.
  
