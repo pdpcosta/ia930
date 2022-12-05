@@ -19,8 +19,10 @@ O objetivo deste trabalho é tentar detectar posts que possam conter gatilhos em
  
 ## Abordagem Adotada
 A proposta foi utilizar o treinamento de um modelo para classificação de texto em 3 níveis diferentes de conteúdo agressivo (com raiva) no dataset Facebook News.
+
 Gerando uma avaliação da acurácia do modelo em um conjunto de testes do mesmo dataset.
 Utilizamos a arquitetura: BERT sigla de Bidirectional Enconder Representations from Transformers (representações de codificador bidirecional de transformadores) (fine-tuning no FBNews).
+
 Foi proposto um plugin que utilizasse o modelo para fazer as classificações online, esse desenvolvimento do plugin para o firefox ficou para a pŕoxima etapa. 
  
 Modelo BERT: 
@@ -40,25 +42,33 @@ Classificação dos post de acordo com a quantidade de reações de raiva dos me
 Menor que 1% em post inofensivo.
  - Entre 1% e 10% em post moderadamente agressivo.
  - Mais que 10% em post agressivo.
+ 
 Fizemos também o fine-tuning do modelo bert-base-cased, levando em consideração palavras maiúsculas e minúsculas).
 Divisão do dataset entre treino 80%, validação 20% e teste 20%.
 Baixa acurácia do modelo final 36% no conjunto de teste.
+
 Utilização de outro modelo BERT pré-treinado com fine-tuing no dataset GoEmotions para classificar os comentários dos posts do FBNews.
 Contagem da quantidade de posts classificados como “anger” por comentário.
+
 Comentários agressivos considerados como reações agressivas.
+
 Utilização da mesma metodologia anterior. 
+
 Resultados também ruins:  34,6% de acurácia no conjunto de testes.
 
-
 ## Notebooks 
+
 - [FBNews_classification.ipynb](https://github.com/EstevesDouglas/ia930/blob/main/2022.2/notebooks/FBNews_classification.ipynb)
+
 - [Model_Training.ipynb](https://github.com/EstevesDouglas/ia930/blob/main/2022.2/notebooks/Model_Training.ipynb)
  
 ## Discussão
  
 Possíveis explicações
-Tokenizer: usamos um pré-treinado que talvez não capture o “zeitgeinst”
+Tokenizer: usamos um pré-treinado que talvez não capture o “zeitgeinst”.
+
 Não é possível detectar sentimentos através de manchetes somente pois as mesmas usam linguagem mais neutra (apesar de despertarem sentimentos em seres humanos).
+
 No caso dos comentários, pode ser que os comentários usados no GoEmotions seguem uma distribuição diferente daqueles do FBNews.
  
 Foram utilizadas as seguintes ferramentas durante o projeto:
