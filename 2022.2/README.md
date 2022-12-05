@@ -51,7 +51,7 @@ Resultados também ruins:  34,6% de acurácia no conjunto de testes.
 
 
 ## Notebooks 
-- [Notebooks](/ia930/main/2022.2/notebooks/)
+- [notebooks](/notebooks/)
  
 ## Discussão
  
