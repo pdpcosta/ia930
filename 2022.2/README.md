@@ -78,6 +78,9 @@ Trabalho futuro sobre o plugin no navegador.
 Duas formas: colocar o modelo em um servidor, através de um torchserver e fazer o plugin acessá-lo, ou “embarcar” o modelo no próprio plugin.
 O primeiro requer infraestrutura extra, o segundo pode ser proibitivo dependendo do tamanho do modelo (espaço, tamanho do pacote, memória, processador para inferência).
  
+## SLIDES
+- [Detecção de Posts Indutores de Raiva](https://docs.google.com/presentation/d/1djM6LmyLw2U8rIfPvfilG2f1DnUYxYYxdP-9m0REGek/edit#slide=id.p)
+ 
 ## Referências Bibliográficas
  
 - [GoEmotions: A Dataset of Fine-Grained Emotions](https://arxiv.org/abs/2005.00547)
