@@ -76,11 +76,12 @@ f1 = f1_score(y_test, y_pred, average='macro')
 print(f'F1 Score: {f1:.2f}')
 
 cm = confusion_matrix(y_test, y_pred, normalize='true')
-cmd = ConfusionMatrixDisplay(cm)
+cmd = ConfusionMatrixDisplay(cm, display_labels=['Negative', 'Neutral', 'Positive'])
 
 fig, ax = plt.subplots()
 fig.set_size_inches(15,10)
 ax.set_title('Leave One Out Classifier Confusion Matrix')
 
 cmd.plot(ax=ax, cmap='GnBu')
+plt.savefig('./figures/leave_one_out_cm.png')
 plt.show()

@@ -67,4 +67,5 @@ fig.set_size_inches(15,10)
 ax.set_title('Random Forest Classifier Confusion Matrix')
 
 cmd.plot(ax=ax, cmap='GnBu')
+plt.savefig('./figures/best_model_cm.png')
 plt.show()

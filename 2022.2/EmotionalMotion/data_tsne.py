@@ -50,7 +50,7 @@ def plot_embed_projection(features_vectors, samples_per_subject, p, ee, lr, n_it
 
 
 fig, axs = plt.subplots(3,3)
-fig.set_size_inches(3*12, 3*12)
+fig.set_size_inches(22, 22)
 
 for rows in axs:
     for ax in rows:
@@ -81,4 +81,5 @@ for emotion_label in [0,1,2]:
     plot_embed_projection(mo_data_stack, samples_per_subject[1], 50, 12, 250, 5000, ax=axs[emotion_label][1])
     plot_embed_projection(mu_data_stack, samples_per_subject[2], 50, 12, 250, 5000, ax=axs[emotion_label][2])
 
+plt.savefig('./figures/tsne_clusters.png')
 plt.show()

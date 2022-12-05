@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import balanced_accuracy_score, accuracy_score, f1_score, confusion_matrix, ConfusionMatrixDisplay
 from sklearn.inspection import permutation_importance
+from tqdm import tqdm
 
 matplotlib.use('TKAgg')
 # Set pyplot font size configs
@@ -53,18 +54,30 @@ features_names.extend(['acc__mag', 'acc_area', 'acc_mean_jerk', 'acc_std_jerk', 
 [features_names.append(axis + '__' + feat) for axis in ['gyr_x', 'gyr_y', 'gyr_z'] for feat in feature_per_axis]
 features_names.extend(['gyr__mag', 'gyr_area', 'gyr_mean_jerk', 'gyr_std_jerk', 'gyr_angle_x', 'gyr_angle_y', 'gyr_angle_z'])
 
-result = permutation_importance(
-    main_clf, x_test, y_test, n_repeats=20, random_state=42, n_jobs=4
-)
+all_tests = None
 
-forest_importances = pd.Series(result.importances_mean, index=features_names)
+for _ in tqdm(range(50)):
+    permute_clf = RandomForestClassifier(n_estimators=200, criterion='entropy')
+    permute_clf.fit(x_train, y_train)
+
+    result = permutation_importance(
+        permute_clf, x_test, y_test, n_repeats=5, n_jobs=-1
+    )
+
+    if all_tests is None:
+        all_tests = result.importances_mean
+    else:
+        all_tests = all_tests + result.importances_mean
+
+forest_importances = pd.Series(all_tests / 50, index=features_names)
 
 fig, ax = plt.subplots()
-fig.set_size_inches(200,15)
+fig.set_size_inches(150,25)
 forest_importances.sort_values(ascending=False).plot.bar(ax=ax)
 ax.set_title("Feature importances using permutation on full model")
 ax.set_ylabel("Mean accuracy decrease")
 fig.tight_layout()
+plt.savefig('./figures/feature_importance.png')
 plt.show()
 
 #---- Training model with only positivie importance features------
@@ -92,4 +105,5 @@ fig.set_size_inches(15,10)
 ax.set_title('Important Features Classifier Confusion Matrix')
 
 cmd.plot(ax=ax, cmap='GnBu')
+plt.savefig('./figures/importance_model.png')
 plt.show()
