@@ -93,7 +93,7 @@ class Ui(QtWidgets.QMainWindow):
         color = "green" if self.real_label == self.predicted_label else "red"
         self.label_13.setStyleSheet("color: " + color + ";")
         self.get_movies()
-        self.my_roc_curve()
+        # self.my_roc_curve()
 
     def get_movies(self):
         movies = give_me_movies(

@@ -43,8 +43,6 @@ def load_images():
     train_ds = preprocessing.image_dataset_from_directory(
         # "FER2013/train",
         "ckplus/ck/CK+48/train",
-        validation_split=0.2,
-        subset="training",
         seed=1337,
         image_size=image_size,
         batch_size=batch_size,
@@ -53,8 +51,6 @@ def load_images():
     val_ds = preprocessing.image_dataset_from_directory(
         # "FER2013/test",
         "ckplus/ck/CK+48/validation",
-        validation_split=0.2,
-        subset="validation",
         seed=1337,
         image_size=image_size,
         batch_size=batch_size,
@@ -162,7 +158,7 @@ def set_model_compile(model):
         metrics=["accuracy"]
     )
     # model.summary()
-    # plot_model(model, to_file='model.png')
+    # plot_model(model, to_file='model.png', show_shapes=True, show_dtype=False, expand_nested=True, show_layer_activations=False)
     return model
 
 def set_model_fit(model, train_ds, epochs, val_ds):
@@ -204,18 +200,15 @@ def save_model(model, path):
         tf.keras.models.save_model(model, path)
 
     # score = predictions[0]
-
     # print(predictions[0])
     # print(predictions)
 
 def map_emotion_genre():
     m = {
-
          'Angry': ['Drama', 'Thriller', 'Action','Romance','Adventure','Crime',
                      'Science','Fiction','Horror','Family','Fantasy','Mystery',
                      'Animation', 'History','Music','War'],
 
-         # ? Equal Sad to avoid error
          'Contempt': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
                  'Crime','Science','Fiction','Horror','Family','Fantasy',
                  'Mystery','Animation','History','Music','War'],
@@ -224,7 +217,6 @@ def map_emotion_genre():
                      'Crime','Science','Fiction','Horror','Family','Fantasy',
                      'Mystery','Animation','History','Music','War','Documentary'],
 
-         # ? Equal Sad to avoid error
          'Fear': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
                  'Crime','Science','Fiction','Horror','Family','Fantasy',
                  'Mystery','Animation','History','Music','War'],
@@ -238,16 +230,10 @@ def map_emotion_genre():
                  'Crime','Science','Fiction','Horror','Family','Fantasy',
                  'Mystery','Animation','History','Music','War'],
 
-         # ? Equal Happy to avoid error
          'Surprise': ['Comedy','Thriller','Action','Romance','Adventure','Crime',
                    'Science','Fiction','Horror','Family','Fantasy','Mystery',
                    'Animation','History','Music','War','Documentary','Western',
-                   'Foreign','TV','Movie'],
-
-         # 'Neutral': ['Drama','Comedy','Thriller','Action','Romance','Adventure',
-         #             'Crime','Science','Fiction','Horror','Family','Fantasy',
-         #             'Mystery','Animation','History','Music','War','Documentary',
-         #             'Western','Foreign','TV','Movie']
+                   'Foreign','TV','Movie']
          }
 
     return m
